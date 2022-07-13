@@ -6,6 +6,44 @@ sum <- apply(ident,1,sum) #total identity score of each entry
 ident <- data.frame(cbind(ident,sum)) #add sum scores as new column, coerce back to dataframe
 ident <- as.data.frame(cbind(ident,demo)) #bind with demo, coerce to dataframe
 
+#can the above be turned into a function?
+sum.ident.score <- function(data){
+  ident <- data[,grepl("^ident",names(data))]
+  demo <- data[,grepl("^demo",names(data))] #just demo info
+  ident <- apply(ident,2,as.numeric) #coerce from char to numeric
+  sum <- apply(ident,1,sum) #total identity score of each entry
+  ident <- data.frame(cbind(ident,sum)) #add sum scores as new column, coerce back to dataframe
+  ident <- as.data.frame(cbind(ident,demo))
+  return(ident)
+}
+ident<- sum.ident.score(survey_rev) # that works
+
+#Above funtion, but customizable for anything I want to index in the survey?
+#(B/c above fuction just pulls full identity score)
+
+#code for dataframe with summed interest section scores and demo info
+#I want to make this a function, and be able to change which columns I subset
+ident_int <- subset(survey_rev,select=c(ident_10:ident_14)) #interest section
+ident_int <- apply(ident_int,2,as.numeric) #coerce from char to numeric
+sum_int <- apply(ident_int,1,sum) #total identity score of each entry
+ident_int <- data.frame(cbind(ident_int,sum_int)) #add sum scores as new column, coerce back to dataframe
+ident_int <- as.data.frame(cbind(ident_int,demo)) 
+
+#trying as a function, argument 'index' for columns to subset
+sum.score <- function(data, index){
+  ident <- subset(data,select=c(index))
+  demo <- data[,grepl("^demo",names(data))]
+  ident <- apply(ident,2,as.numeric) #coerce from char to numeric
+  sum <- apply(ident,1,sum) #total identity score of each entry
+  ident <- data.frame(cbind(ident,sum)) #add sum scores as new column, coerce back to dataframe
+  ident <- as.data.frame(cbind(ident,demo))
+  return(ident)
+}
+#trying function with specifying interest section columns
+ident_int <- sum.score(survey_rev, index = ident_10:ident_14) #doesn't work
+
+
+#statistics time
 #total identity score by racial identity
 aggregate(formula = sum ~ demo_4,
           FUN = mean,
