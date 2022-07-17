@@ -1,4 +1,4 @@
-#dataframe with summed int section scores and demo info
+#dataframe with summed interest section scores and demo info
 ident_int <- subset(survey_rev,select=c(ident_10:ident_14))
 ident_int <- apply(ident_int,2,as.numeric) #coerce from char to numeric
 sum_int <- apply(ident_int,1,sum) #total identity score of each entry

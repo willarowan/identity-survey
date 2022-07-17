@@ -3,9 +3,10 @@ library(dplyr)
 results <- read.csv(file = 'https://raw.githubusercontent.com/willarowan/identity-survey/main/Survey_7_7_22.csv')
 survey <- results #make a copy
 
-#get rid of unwanted rows/columns
+#get rid of unwanted rows/columns, invalid responses
+survey <- subset(survey, Q13=="Yes" & Q14=="Yes") #eligibility & consent qs
 survey <- subset(survey,select=-c(1:13))
-survey <- as.data.frame(survey[-c(1,2),-c(47)])
+survey <- subset(survey,select=-c(47))
 #rename columns
 names(survey) <- c(paste0("ident_",1:20),paste0("fact_",1:15),
                    paste0("shrtansw_",1:5), paste0("demo_",1:6))

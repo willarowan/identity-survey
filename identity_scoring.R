@@ -21,9 +21,10 @@ ident<- sum.ident.score(survey_rev) # that works
 #Above funtion, but customizable for anything I want to index in the survey?
 #(B/c above fuction just pulls full identity score)
 
-#code for dataframe with summed interest section scores and demo info
+#Working code for dataframe with summed interest section scores and demo info
 #I want to make this a function, and be able to change which columns I subset
 ident_int <- subset(survey_rev,select=c(ident_10:ident_14)) #interest section
+demo <- survey_rev[,grepl("^demo",names(survey_rev))]
 ident_int <- apply(ident_int,2,as.numeric) #coerce from char to numeric
 sum_int <- apply(ident_int,1,sum) #total identity score of each entry
 ident_int <- data.frame(cbind(ident_int,sum_int)) #add sum scores as new column, coerce back to dataframe
@@ -40,7 +41,7 @@ sum.score <- function(data, index){
   return(ident)
 }
 #trying function with specifying interest section columns
-ident_int <- sum.score(survey_rev, index = ident_10:ident_14) #doesn't work
+ident_int <- sum.score(survey_rev, survey_rev[,ident_10:ident_14]) #doesn't work
 
 
 #statistics time
@@ -84,12 +85,12 @@ t.test(x = ident_WNB_BIPOC$sum,
        y = ident_WNB_White$sum) 
 
 #WNB and Male White?
-ident_M_White <- subset(ident_White, demo_1=='Male')
+ident_M_White <- ident_White[grep("Male", ident_White$demo_1), ]
 t.test(x = ident_M_White$sum,
        y = ident_WNB_White$sum)
 
 #WNB and Male BIPOC?
-ident_M_BIPOC <- subset(ident_BIPOC, demo_1=='Male')
+ident_M_BIPOC <- ident_BIPOC[grep("Male", ident_BIPOC$demo_1), ]
 t.test(x = ident_WNB_BIPOC$sum,
        y = ident_M_BIPOC$sum)
 
@@ -104,3 +105,24 @@ t.test(x = ident_WNB_BIPOC$sum,
 #Male BIPOC and WNB White?
 t.test(x = ident_WNB_White$sum,
        y = ident_M_BIPOC$sum)
+
+#WNB and Male?
+ident_M <- subset(ident, demo_1=='Male')
+ident_WNB <- ident[grep("Female|Non-Binary|Intersex", ident$demo_1), ]
+t.test(x = ident_WNB$sum,
+       y = ident_M$sum)
+
+#regression
+lm(formula = ident_BIPOC$sum ~ ident_White$sum)
+
+#plotting results
+hist(x = ident_BIPOC$sum,
+     col=rgb(0,0,1,0.2),
+     main = "Geoscience identity of BIPOC vs. White students",
+     xlim = c(40,110),
+     xlab = "Score of Geoscience Identity")
+hist(x = ident_White$sum,
+     col=rgb(1,0,0,0.2), add=TRUE)
+legend('topright', c('BIPOC students', 'White students'),
+       fill=c(rgb(0,0,1,0.2), rgb(1,0,0,0.2)))
+    
