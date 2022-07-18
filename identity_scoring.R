@@ -2,8 +2,8 @@
 ident <- survey_rev[,grepl("^ident",names(survey_rev))] #just identity score columns
 demo <- survey_rev[,grepl("^demo",names(survey_rev))] #just demo info
 ident <- apply(ident,2,as.numeric) #coerce from char to numeric
-sum <- apply(ident,1,sum) #total identity score of each entry
-ident <- data.frame(cbind(ident,sum)) #add sum scores as new column, coerce back to dataframe
+sum_ident <- apply(ident,1,sum) #total identity score of each entry
+ident <- data.frame(cbind(ident,sum_ident)) #add sum scores as new column, coerce back to dataframe
 ident <- as.data.frame(cbind(ident,demo)) #bind with demo, coerce to dataframe
 
 #can the above be turned into a function?
@@ -79,10 +79,16 @@ t.test(x = ident_BIPOC$sum,
        y = ident_White$sum)
 
 #Women & Non-binary BIPOC and WNB White?
-ident_WNB_BIPOC <- ident_BIPOC[grep("Female|Non-Binary|Intersex", ident_BIPOC$demo_1), ]
-ident_WNB_White <- ident_White[grep("Female|Non-Binary|Intersex", ident_White$demo_1), ]
+ident_WNB_BIPOC <- ident_BIPOC[grep("Female|Non-Binary|Intersex|I'll", ident_BIPOC$demo_1), ]
+ident_W_BIPOC <- ident_BIPOC[grep("Female", ident_BIPOC$demo_1), ]
+ident_NB_BIPOC <- ident_BIPOC[grep("Non-Binary|Intersex|I'll", ident_BIPOC$demo_1), ]
+ident_W_White <- ident_White[grep("Female", ident_White$demo_1), ]
+ident_NB_White <- ident_White[grep("Non-Binary|Intersex|I'll", ident_White$demo_1), ]
+ident_WNB_White <- ident_White[grep("Female|Non-Binary|Intersex|I'll", ident_White$demo_1), ]
 t.test(x = ident_WNB_BIPOC$sum,
        y = ident_WNB_White$sum) 
+t.test(x = ident_NB_BIPOC$sum,
+       y = ident_NB_White$sum)
 
 #WNB and Male White?
 ident_M_White <- ident_White[grep("Male", ident_White$demo_1), ]
