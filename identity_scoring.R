@@ -78,25 +78,25 @@ ident_White <- subset(ident, demo_3=="Non-Hispanic or Latino" & demo_4=="White")
 t.test(x = ident_BIPOC$sum,
        y = ident_White$sum)
 
-#Women & Non-binary BIPOC and WNB White?
+#sub-divide White and BIPOC into gender
 ident_WNB_BIPOC <- ident_BIPOC[grep("Female|Non-Binary|Intersex|I'll", ident_BIPOC$demo_1), ]
-ident_W_BIPOC <- ident_BIPOC[grep("Female", ident_BIPOC$demo_1), ]
-ident_NB_BIPOC <- ident_BIPOC[grep("Non-Binary|Intersex|I'll", ident_BIPOC$demo_1), ]
-ident_W_White <- ident_White[grep("Female", ident_White$demo_1), ]
-ident_NB_White <- ident_White[grep("Non-Binary|Intersex|I'll", ident_White$demo_1), ]
+#ident_W_BIPOC <- ident_BIPOC[grep("Female", ident_BIPOC$demo_1), ]
+#ident_NB_BIPOC <- ident_BIPOC[grep("Non-Binary|Intersex|I'll", ident_BIPOC$demo_1), ]
+#ident_W_White <- ident_White[grep("Female", ident_White$demo_1), ]
+#ident_NB_White <- ident_White[grep("Non-Binary|Intersex|I'll", ident_White$demo_1), ]
 ident_WNB_White <- ident_White[grep("Female|Non-Binary|Intersex|I'll", ident_White$demo_1), ]
+ident_M_White <- ident_White[grep("Male", ident_White$demo_1), ]
+ident_M_BIPOC <- ident_BIPOC[grep("Male", ident_BIPOC$demo_1), ]
+
+#Women & Non-binary (WNB) BIPOC and WNB White?
 t.test(x = ident_WNB_BIPOC$sum,
        y = ident_WNB_White$sum) 
-t.test(x = ident_NB_BIPOC$sum,
-       y = ident_NB_White$sum)
 
 #WNB and Male White?
-ident_M_White <- ident_White[grep("Male", ident_White$demo_1), ]
 t.test(x = ident_M_White$sum,
        y = ident_WNB_White$sum)
 
 #WNB and Male BIPOC?
-ident_M_BIPOC <- ident_BIPOC[grep("Male", ident_BIPOC$demo_1), ]
 t.test(x = ident_WNB_BIPOC$sum,
        y = ident_M_BIPOC$sum)
 

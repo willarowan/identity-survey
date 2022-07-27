@@ -1,6 +1,6 @@
 install.packages(dplyr)
 library(dplyr)
-results <- read.csv(file = 'https://raw.githubusercontent.com/willarowan/identity-survey/main/Survey_7_7_22.csv')
+results <- read.csv(file = 'https://raw.githubusercontent.com/willarowan/identity-survey/main/Survey_7_26_22.csv')
 survey <- results #make a copy
 
 #get rid of unwanted rows/columns, invalid responses
