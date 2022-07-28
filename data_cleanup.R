@@ -1,5 +1,9 @@
 install.packages(dplyr)
 library(dplyr)
+
+
+# ----- Run everything --------
+
 results <- read.csv(file = 'https://raw.githubusercontent.com/willarowan/identity-survey/main/Survey_7_26_22.csv')
 survey <- results #make a copy
 
@@ -25,7 +29,7 @@ survey[survey == '-1 = Had a negative impact'] <- -1
 survey[survey == '-2 = Had a strong negative impact'] <- -2
 survey[survey == 'N/A = Not applicable/ Did not experience this'] <- NA
 
-str(survey)
+#str(survey)
 
 # Fix reverse-coded questions
 columnsToReverse <- c('ident_7','ident_9','ident_12','ident_13','ident_14','ident_18','ident_20')
@@ -36,4 +40,4 @@ survey_rev[,columnsToReverse] <- 6-survey_rev[,columnsToReverse]
 survey_rev <- as.data.frame(survey_rev)
 
 # test cleanup on a subset of data
-test <- results[1:15,] #using small subset
+#test <- results[1:15,] #using small subset
