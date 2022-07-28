@@ -75,7 +75,8 @@ ggplot(ident_racegen, aes(x = sum_ident, colour = racegen)) +
 
   
 #Similar to density curves: frequency polygon (similar to histogram)
-ggplot(ident_race, aes(x = sum_ident, fill = race) + geom_freqpoly(binwidth = 4)) 
+ggplot(ident_race, aes(x = sum_ident, fill = race)) + 
+  geom_freqpoly(binwidth = 4) 
   
   
 #Misc and old
