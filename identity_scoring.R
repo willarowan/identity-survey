@@ -79,7 +79,8 @@ ident_WNB <- ident[grep("Female|Non-Binary|Intersex", ident$demo_1), ]
 
 
 #statistics time
-#total identity score by racial identity
+
+#total identity score by racial identity - returns all combos
 aggregate(formula = sum ~ demo_4,
           FUN = mean,
           data = ident)
@@ -88,12 +89,12 @@ ident %>% # using dplyr
   group_by(demo_4) %>%
   summarise(avg_sum = mean(sum, na.rm=TRUE))
 
-#total identity score by gender identity
+#total identity score by gender identity - returns all combos
 aggregate(formula = sum ~ demo_1,
           FUN = mean,
           data = ident)
 
-#checking for statistical significance
+#checking for statistical significance with subsetting example
 t.test(formula = sum ~ demo_1,
        data = ident,
        subset = demo_1 %in% c('Female', 'Male'))
@@ -101,9 +102,20 @@ t.test(formula = sum ~ demo_1,
 aov(formula = sum ~ demo_4,
     data = ident)
 
+#Evaluating major hypothesis of project
 #difference in identity scores between White and BIPOC?
 t.test(x = ident_BIPOC$sum,
        y = ident_White$sum)
+
+cor.test(x = ident_BIPOC$sum,
+         y = ident_White$sum) #must have the same length (doesn't work)
+
+
+ident.cstest <- chisq.test(x = table(ident_BIPOC$sum,
+                                     ident_White$sum)) #must have same length
+
+
+#T-test bonanza
 
 #Women & Non-binary (WNB) BIPOC and WNB White?
 t.test(x = ident_WNB_BIPOC$sum,
@@ -133,12 +145,46 @@ t.test(x = ident_WNB_White$sum,
 t.test(x = ident_WNB$sum,
        y = ident_M$sum)
 
-#regression
-#glm(formula = ident_BIPOC$sum ~ ident_White$sum) #doesn't work, needs to be same length
 
-#anova
-#ident.aov<- aov(formula = racegen ~ sum_ident, data = ident_racegen) #doesn't work
-#summary(ident.aov) 
-ident.II.aov <- car::Anova(ident_racegen, type = 2)
+#linear regression and anova
 
-    
+#are variables of same length?
+with(ident_racegen,
+     table(sum_ident, racegen))
+
+#race and gender
+racegen.lm <- lm(sum_ident ~ racegen,
+   data = ident_racegen)
+summary(racegen.lm)
+
+racegen.aov <- aov(racegen.lm)
+summary(racegen.aov)
+
+#just race
+race.lm <- lm(sum_ident ~ race,
+                 data = ident_race)
+summary(race.lm)
+
+race.aov <- aov(race.lm)
+summary(race.aov)
+
+#comparing models of race vs racegen with anova
+anova(race.lm, racegen.lm) #error msg not same size dataset
+
+ident.II.aov <- car::Anova(racegen.lm, type = 2)
+summary(ident.II.aov)
+
+
+#more complex statistics
+#Kolmogorov-Smirnov test for normal distribution
+ks.test(ident_BIPOC$sum_ident, 'pnorm')
+?ks.test()    
+#p-value is sufficiently small to indicate non-normal distribution
+#warning msg 'ties should not be present'
+
+#Mann-Whitney U test
+#for two variables
+wilcox.test(sum_ident ~ race,
+            data = ident_race,
+            exact = FALSE) #p-value = .007
+?wilcox.test()
