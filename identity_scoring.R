@@ -70,6 +70,18 @@ ident_M_BIPOC <- ident_BIPOC[grep("Male", ident_BIPOC$demo_1), ]
 #ident_W_White <- ident_White[grep("Female", ident_White$demo_1), ]
 #ident_NB_White <- ident_White[grep("Non-Binary|Intersex|I'll", ident_White$demo_1), ]
 
+#Add column wtih race & gender identifiers
+#dataframe with groups of BIPOC/White, WNB/Male
+ident_M_BIPOC$racegen <- c("BIPOC, Male")
+ident_WNB_BIPOC$racegen <- c("BIPOC, Women and Non-Binary")
+ident_M_White$racegen <- c("White, Male")
+ident_WNB_White$racegen <- c("White, Women and Non-Binary")
+ident_racegen <- rbind(ident_M_White,ident_WNB_White, ident_M_BIPOC,ident_WNB_BIPOC)
+
+#Add column with race identifiers
+ident_BIPOC$race <- c("BIPOC")
+ident_White$race <- c("White")
+
 #binning into Just gender identity
 ident_M <- subset(ident, demo_1=='Male')
 ident_WNB <- ident[grep("Female|Non-Binary|Intersex", ident$demo_1), ]
