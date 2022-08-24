@@ -1,5 +1,6 @@
 install.packages('car')
 library(car)
+library(dplyr)
 
 
 # ------- Start chunk to run -----------
@@ -81,6 +82,7 @@ ident_racegen <- rbind(ident_M_White,ident_WNB_White, ident_M_BIPOC,ident_WNB_BI
 #Add column with race identifiers
 ident_BIPOC$race <- c("BIPOC")
 ident_White$race <- c("White")
+ident_race <- rbind(ident_BIPOC,ident_White)
 
 #binning into Just gender identity
 ident_M <- subset(ident, demo_1=='Male')
@@ -93,13 +95,13 @@ ident_WNB <- ident[grep("Female|Non-Binary|Intersex", ident$demo_1), ]
 #statistics time
 
 #total identity score by racial identity - returns all combos
-aggregate(formula = sum ~ demo_4,
+aggregate(formula = sum_ident ~ race,
           FUN = mean,
-          data = ident)
+          data = ident_race)
 #alternate which also works
-ident %>% # using dplyr
-  group_by(demo_4) %>%
-  summarise(avg_sum = mean(sum, na.rm=TRUE))
+ident_race %>% # using dplyr
+  group_by(race) %>%
+  summarise(avg_sum_ident = mean(sum_ident, na.rm=TRUE))
 
 #total identity score by gender identity - returns all combos
 aggregate(formula = sum ~ demo_1,
@@ -200,3 +202,9 @@ wilcox.test(sum_ident ~ race,
             data = ident_race,
             exact = FALSE) #p-value = .007
 ?wilcox.test()
+
+#Kruskal-Wallis test: non-parametric alt for one-way ANOVA
+kruskal.test(sum_ident ~ racegen, data = ident_racegen)
+
+pairwise.wilcox.test(ident_racegen$sum_ident, ident_racegen$racegen,
+                     p.adjust.method = "BH")

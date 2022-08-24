@@ -98,6 +98,7 @@ ggplot(ident_race, aes(x = sum_ident, fill = race)) +
   ggtitle("Geoscience Identity of Senior Geoscience Majors")+
   xlab("Strength of Geoscience Identity")+
   ylab("Number of Students")+
+  theme(legend.position = "right")+
   labs(fill = "Race/Ethnicity")
   
   
