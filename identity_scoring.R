@@ -192,6 +192,8 @@ summary(ident.II.aov)
 #more complex statistics
 #Kolmogorov-Smirnov test for normal distribution
 ks.test(ident_BIPOC$sum_ident, 'pnorm')
+
+ks.test(ident_White$sum_ident, 'pnorm')
 ?ks.test()    
 #p-value is sufficiently small to indicate non-normal distribution
 #warning msg 'ties should not be present'

@@ -69,3 +69,11 @@ t.test(x = ident_int_WNB_BIPOC$sum,
 #Male BIPOC and WNB White?
 t.test(x = ident_int_WNB_White$sum,
        y = ident_int_M_BIPOC$sum)
+
+#quick vis
+ggplot(ident_int_racegen, aes(x = sum_int, colour = racegen)) + 
+  geom_density()+
+  ggtitle("Geoscience Identity of Senior Geoscience Majors")+
+  xlab("Strength of Geoscience Identity")+
+  ylab("Number of Students")+
+  labs(fill = "Race/Ethnicity, Gender Identity")
