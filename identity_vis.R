@@ -1,6 +1,8 @@
 install.packages("stringr")
+install.packages('ggridges')
 library("stringr")
 library("ggplot2")
+library('ggridges')
 
 # **Reminder to run data_cleanup.R and identity_scoring.R before starting**
 

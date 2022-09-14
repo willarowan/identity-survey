@@ -44,9 +44,10 @@ pairwise.wilcox.test(ident_test_racegen$sum_test, ident_test_racegen$racegen,
                      p.adjust.method = "BH")
 
 #quick vis
-ggplot(ident_test_racegen, aes(x = sum_test, colour = racegen)) + 
-  geom_density()+
+ggplot(ident_test_racegen, aes(x = sum_test, y = racegen, fill = racegen)) + 
+  geom_density_ridges(size = .5)+
   ggtitle("Geoscience Identity of Senior Geoscience Majors")+
   xlab("Strength of Geoscience Identity")+
-  ylab("Number of Students")+
-  labs(fill = "Race/Ethnicity, Gender Identity")
+  ylab("Gender Identity, Race/Ethnicity")+
+  theme(axis.title.x = element_text(size = 14))+
+  theme(axis.title.y = element_text(size = 14))
