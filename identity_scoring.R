@@ -6,7 +6,7 @@ library(dplyr)
 # ------- Start chunk to run -----------
 
 #Sum identity score
-ident <- survey_rev[,grepl("^ident",names(survey_rev))] #just identity score columns
+ident <- subset(survey_rev,select=c(ident_1:ident_9,ident_15:ident_20)) #just identity score columns
 demo <- survey_rev[,grepl("^demo",names(survey_rev))] #just demo info
 ident <- apply(ident,2,as.numeric) #coerce from char to numeric
 sum_ident <- apply(ident,1,sum) #total identity score of each entry

@@ -1,8 +1,10 @@
 install.packages("stringr")
 install.packages('ggridges')
+install.packages('gcookbook')
 library("stringr")
 library("ggplot2")
 library('ggridges')
+library('gcookbook')
 
 # **Reminder to run data_cleanup.R and identity_scoring.R before starting**
 
@@ -97,12 +99,30 @@ ggplot(ident_racegen, aes(x = sum_ident, colour = racegen)) +
 #Similar to density curves: frequency polygon (similar to histogram)
 ggplot(ident_race, aes(x = sum_ident, fill = race)) + 
   geom_freqpoly(binwidth = 4)+
+  scale_fill_viridis_d()+
   ggtitle("Geoscience Identity of Senior Geoscience Majors")+
-  xlab("Strength of Geoscience Identity")+
+  xlab(expression("Lower Geoscience Identity" %<->% "Higher Geoscience Identity"))+
   ylab("Number of Students")+
+  theme(axis.title.x = element_text(size = 12))+
+  theme(axis.title.y = element_text(size = 12))+
+  theme(axis.text.y = element_text(size = 10))+
+  theme(axis.ticks = element_blank(), axis.text.x = element_blank())+
   theme(legend.position = "right")+
-  labs(fill = "Race/Ethnicity")
+  labs(colour = "Race/Ethnicity")
   
+
+#Stacked density curves
+ggplot(ident_racegen, aes(x = sum_ident, y = racegen, fill = racegen)) + 
+  geom_density_ridges(size = .5)+
+  scale_fill_viridis_d()+
+  ggtitle("Geoscience Identity of Senior Geoscience Majors")+
+  xlab(expression("Lower Geoscience Identity" %<->% "Higher Geoscience Identity"))+
+  ylab("Number of Students")+
+  theme(axis.title.x = element_text(size = 12))+
+  theme(axis.title.y = element_text(size = 12))+
+  theme(axis.text.y = element_text(size = 10))+
+  theme(axis.ticks = element_blank(), axis.text.x = element_blank())+
+  theme(legend.position = "none")
   
 #Misc and old
 #histogram with stacked datasets (not ideal)
