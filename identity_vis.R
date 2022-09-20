@@ -21,14 +21,24 @@ ident_BIPOC$race <- c("BIPOC")
 ident_White$race <- c("White")
 ident_race <- rbind(ident_BIPOC,ident_White)
 
+#adding mean to plots, n to labels
+ident_racegen %>% count(racegen, sort = TRUE)
+ident %>% count(racegen, sort = TRUE)
+ident$racegen <- c("All Responses")
+ident_racegen_plusmean <- rbind(ident, ident_racegen)
 
 #Box and whisker plots
 #Race and gender identity
-ggplot(ident_racegen, aes(x=racegen, y=sum_ident)) +
+ggplot(ident_racegen_plusmean, aes(x=racegen, y=sum_ident)) +
   geom_boxplot()+
+  stat_summary(fun = "mean", geom = "point", shape = 23, size = 3, fill = "white")+
   ggtitle("Geoscience Identity of Senior Geoscience Majors")+
   theme(axis.text.x = element_text(size=10, vjust = 1))+
-  scale_x_discrete(labels = function(x) str_wrap(x, width = 15))+
+  scale_x_discrete(labels = c("All Responses\n(n = 167)",
+                              "BIPOC, Male\n(n = 27)", 
+                              "BIPOC, Women and Non-Binary\n(n = 37)", 
+                              "White, Male\n(n = 24)",
+                              "White, Women and Non-Binary\n(n = 51)"))+
   theme(axis.text.y = element_text(size=8))+
   ylab("Strength of Geoscience Identity")+
   theme(axis.title.y = element_text(size=14))+
@@ -121,7 +131,7 @@ ggplot(ident_racegen, aes(x = sum_ident, y = racegen, fill = racegen)) +
   theme(axis.title.x = element_text(size = 12))+
   theme(axis.title.y = element_text(size = 12))+
   theme(axis.text.y = element_text(size = 10))+
-  theme(axis.ticks = element_blank(), axis.text.x = element_blank())+
+  #theme(axis.ticks = element_blank(), axis.text.x = element_blank())+
   theme(legend.position = "none")
   
 #Misc and old
