@@ -26,12 +26,15 @@ ident_racegen %>% count(racegen, sort = TRUE)
 ident %>% count(racegen, sort = TRUE)
 ident$racegen <- c("All Responses")
 ident_racegen_plusmean <- rbind(ident, ident_racegen)
+#and for just race
+ident$race
+
+#*** This one for GSA:
 
 #Box and whisker plots
 #Race and gender identity
-ggplot(ident_racegen_plusmean, aes(x=racegen, y=sum_ident)) +
+ggplot(ident_racegen_plusmean, aes(x=racegen, y=sum_ident, fill=racegen)) +
   geom_boxplot()+
-  stat_summary(fun = "mean", geom = "point", shape = 23, size = 3, fill = "white")+
   ggtitle("Geoscience Identity of Senior Geoscience Majors")+
   theme(axis.text.x = element_text(size=10, vjust = 1))+
   scale_x_discrete(labels = c("All Responses\n(n = 167)",
@@ -39,10 +42,12 @@ ggplot(ident_racegen_plusmean, aes(x=racegen, y=sum_ident)) +
                               "BIPOC, Women and Non-Binary\n(n = 37)", 
                               "White, Male\n(n = 24)",
                               "White, Women and Non-Binary\n(n = 51)"))+
+  scale_fill_manual(values=c("grey", "#69b3a2", "#69b3a2", "#69b3a2", "#69b3a2")) +
   theme(axis.text.y = element_text(size=8))+
   ylab("Strength of Geoscience Identity")+
   theme(axis.title.y = element_text(size=14))+
-  xlab("")
+  xlab("")+
+  theme(legend.position="none")
 
 #Just race
 ggplot(ident_race, aes(x=race, y=sum_ident)) +
@@ -97,14 +102,21 @@ ggplot(ident_race, aes(x = sum_ident, colour = race)) +
   ylab("Number of Students")+
   labs(fill = "Race/Ethnicity")
 
-#Race and gender identity
-ggplot(ident_racegen, aes(x = sum_ident, colour = racegen)) + 
+#Race and gender identity - filled
+ggplot(ident_racegen, aes(x = sum_ident, fill = racegen, alpha = 0.2)) + 
   geom_density()+
   ggtitle("Geoscience Identity of Senior Geoscience Majors")+
   xlab("Strength of Geoscience Identity")+
   ylab("Number of Students")+
   labs(fill = "Race/Ethnicity, Gender Identity")
 
+#Race and gender identity - color lines
+ggplot(ident_racegen, aes(x = sum_ident, colour = racegen)) + 
+  geom_density()+
+  ggtitle("Geoscience Identity of Senior Geoscience Majors")+
+  xlab("Strength of Geoscience Identity")+
+  ylab("Number of Students")+
+  labs(fill = "Race/Ethnicity, Gender Identity")
   
 #Similar to density curves: frequency polygon (similar to histogram)
 ggplot(ident_race, aes(x = sum_ident, fill = race)) + 
