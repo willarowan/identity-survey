@@ -17,6 +17,49 @@ fact_WNB_White <- fact_White[grep("Female|Non-Binary|Intersex|I'll", fact_White$
 fact_M_White <- fact_White[grep("Male", fact_White$demo_1), ]
 fact_M_BIPOC <- fact_BIPOC[grep("Male", fact_BIPOC$demo_1), ]
 
+#Add column wtih race & gender factifiers
+#dataframe with groups of BIPOC/White, WNB/Male
+fact_M_BIPOC$racegen <- c("BIPOC, Male")
+fact_WNB_BIPOC$racegen <- c("BIPOC, Women and Non-Binary")
+fact_M_White$racegen <- c("White, Male")
+fact_WNB_White$racegen <- c("White, Women and Non-Binary")
+fact_racegen <- rbind(fact_M_White,fact_WNB_White, fact_M_BIPOC,fact_WNB_BIPOC)
+
+#Add column with race factifiers
+fact_BIPOC$race <- c("BIPOC")
+fact_White$race <- c("White")
+fact_race <- rbind(fact_BIPOC,fact_White)
+
+#Mann-Whitney U test
+#for two variables
+wilcox.test(fact_11 ~ race,
+            data = fact_race,
+            exact = FALSE) 
+
+wilcox.test(x = fact_M_BIPOC$fact_13, y = fact_M_White$fact_13, 
+            alternative = 'two.sided')
+
+#Kruskal-Wallis test: non-parametric alt for one-way ANOVA
+kruskal.test(fact_13 ~ racegen, data = fact_racegen)
+
+pairwise.wilcox.test(fact_racegen$fact_10, fact_racegen$racegen,
+                     p.adjust.method = "BH")
+
+
+#Example
+
+#microaggressions by race & gen?
+pairwise.wilcox.test(fact_racegen$fact_13, fact_racegen$racegen,
+                     p.adjust.method = "BH")
+
+#microaggressions, comparing each race & gen combo one by one
+wilcox.test(x = fact_WNB_BIPOC$fact_13, y = fact_M_White$fact_13, 
+            alternative = 'two.sided')
+
+wilcox.test(x = fact_WNB_White$fact_13, y = fact_M_White$fact_13, 
+            alternative = 'two.sided')
+
+
 #faculty mentors
 t.test(x = fact_BIPOC$fact_1,
        y = fact_White$fact_1)
@@ -58,6 +101,18 @@ t.test(x = fact_WNB_BIPOC$fact_4,
 
 t.test(x = fact_M_BIPOC$fact_4,
        y = fact_M_White$fact_4)
+
+t.test(x = fact_WNB_BIPOC$fact_4,
+       y = fact_WNB_White$fact_4)
+
+t.test(x = fact_WNB_White$fact_4,
+       y = fact_M_White$fact_4)
+
+t.test(x = fact_WNB_White$fact_4,
+       y = fact_M_BIPOC$fact_4)
+
+t.test(x = fact_WNB_BIPOC$fact_4,
+       y = fact_M_BIPOC$fact_4)
 
 #culural relevance/Indigenous knowledge
 t.test(x = fact_BIPOC$fact_6,
@@ -108,9 +163,27 @@ t.test(x = fact_WNB_White$fact_8,
 t.test(x = fact_BIPOC$fact_9,
        y = fact_White$fact_9)
 
+t.test(x = fact_M_White$fact_9,
+       y = fact_WNB_White$fact_9)
+
+t.test(x = fact_WNB_BIPOC$fact_9,
+       y = fact_M_BIPOC$fact_9)
+
+t.test(x = fact_M_BIPOC$fact_9,
+       y = fact_M_White$fact_9)
+
+t.test(x = fact_WNB_BIPOC$fact_9,
+       y = fact_M_White$fact_9)
+
+t.test(x = fact_WNB_BIPOC$fact_9,
+       y = fact_WNB_White$fact_9)
+
+t.test(x = fact_M_BIPOC$fact_9,
+       y = fact_WNB_White$fact_9)
+
 #feeling a sense of belonging?
 t.test(x = fact_BIPOC$fact_10,
-       y = fact_White$fact_10)
+       y = fact_White$fact_10) #significant
 
 t.test(x = fact_M_White$fact_10,
        y = fact_WNB_White$fact_10)
@@ -147,7 +220,7 @@ t.test(x = fact_WNB_BIPOC$fact_11,
        y = fact_M_White$fact_11) #significant
 
 t.test(x = fact_WNB_BIPOC$fact_11,
-       y = fact_WNB_White$fact_11) #significant
+       y = fact_WNB_White$fact_11)
 
 t.test(x = fact_M_BIPOC$fact_11,
        y = fact_WNB_White$fact_11)
@@ -159,6 +232,15 @@ t.test(x = fact_BIPOC$fact_12,
 t.test(x = fact_WNB_BIPOC$fact_12,
        y = fact_M_White$fact_12) #significant
 
+t.test(x = fact_WNB_White$fact_12,
+       y = fact_M_White$fact_12) #significant
+
+t.test(x = fact_WNB_BIPOC$fact_12,
+       y = fact_M_BIPOC$fact_12)
+
+t.test(x = fact_M_BIPOC$fact_12,
+       y = fact_M_White$fact_12)
+
 #microaggressions?
 t.test(x = fact_BIPOC$fact_13,
        y = fact_White$fact_13)
@@ -166,9 +248,27 @@ t.test(x = fact_BIPOC$fact_13,
 t.test(x = fact_WNB_BIPOC$fact_13,
        y = fact_M_White$fact_13) #significant
 
+t.test(x = fact_WNB_White$fact_13,
+       y = fact_M_White$fact_13) #significant
+
+t.test(x = fact_WNB_BIPOC$fact_13,
+       y = fact_M_BIPOC$fact_13)
+
+t.test(x = fact_M_BIPOC$fact_13,
+       y = fact_M_White$fact_13)
+
 #macroagressions?
 t.test(x = fact_BIPOC$fact_14,
        y = fact_White$fact_14)
 
 t.test(x = fact_WNB_BIPOC$fact_14,
+       y = fact_M_White$fact_14)
+
+t.test(x = fact_WNB_White$fact_14,
+       y = fact_M_White$fact_14) #significant
+
+t.test(x = fact_WNB_BIPOC$fact_14,
+       y = fact_M_BIPOC$fact_14)
+
+t.test(x = fact_M_BIPOC$fact_14,
        y = fact_M_White$fact_14)

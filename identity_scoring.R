@@ -167,12 +167,18 @@ with(ident_racegen,
      table(sum_ident, racegen))
 
 #race and gender
+ident_racegen$racegen <- factor(ident_racegen$racegen, levels=c("White, Women and Non-Binary",
+                                              "White, Male",
+                                              "BIPOC, Male",
+                                              "BIPOC, Women and Non-Binary"))
 racegen.lm <- lm(sum_ident ~ racegen,
    data = ident_racegen)
 summary(racegen.lm)
 
-racegen.aov <- aov(racegen.lm)
+racegen.aov <- aov(formula = sum_ident ~ racegen,
+    data = ident_racegen)
 summary(racegen.aov)
+TukeyHSD(racegen.aov)
 
 #just race
 race.lm <- lm(sum_ident ~ race,

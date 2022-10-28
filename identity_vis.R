@@ -23,11 +23,15 @@ ident_race <- rbind(ident_BIPOC,ident_White)
 
 #adding mean to plots, n to labels
 ident_racegen %>% count(racegen, sort = TRUE)
-ident %>% count(racegen, sort = TRUE)
-ident$racegen <- c("All Responses")
-ident_racegen_plusmean <- rbind(ident, ident_racegen)
+ident3 <- ident
+ident3$racegen <- c("All Responses")
+ident3 %>% count(racegen, sort = TRUE)
+ident_racegen_plusmean <- rbind(ident3, ident_racegen)
 #and for just race
-ident$race
+ident2 <- ident
+ident2$race <- c("All Responses")
+ident_race_plusmean <- rbind(ident2, ident_race)
+ident_race %>% count(race, sort = TRUE)
 
 #*** This one for GSA:
 
@@ -36,17 +40,19 @@ ident$race
 ggplot(ident_racegen_plusmean, aes(x=racegen, y=sum_ident, fill=racegen)) +
   geom_boxplot()+
   ggtitle("Geoscience Identity of Senior Geoscience Majors")+
-  theme(axis.text.x = element_text(size=10, vjust = 1))+
+  theme(plot.title = element_text(size = 16, face = 'bold', hjust = 0.5))+
+  theme(axis.text.x = element_text(size=14, vjust = 1))+
   scale_x_discrete(labels = c("All Responses\n(n = 167)",
                               "BIPOC, Male\n(n = 27)", 
-                              "BIPOC, Women and Non-Binary\n(n = 37)", 
+                              "BIPOC, Women\nand Non-Binary\n(n = 37)", 
                               "White, Male\n(n = 24)",
-                              "White, Women and Non-Binary\n(n = 51)"))+
-  scale_fill_manual(values=c("grey", "#69b3a2", "#69b3a2", "#69b3a2", "#69b3a2")) +
-  theme(axis.text.y = element_text(size=8))+
-  ylab("Strength of Geoscience Identity")+
-  theme(axis.title.y = element_text(size=14))+
+                              "White, Women\nand Non-Binary\n(n = 51)"))+
   xlab("")+
+  theme(axis.text.y = element_text(size=14))+
+  ylab("Strength of Geoscience Identity")+ 
+  theme(axis.title.y = element_text(size=14))+
+  scale_fill_manual(values=c("grey", "#fc766aff", "#fc766aff", "#fc766aff", 
+                             "#fc766aff")) +
   theme(legend.position="none")
 
 #Just race
@@ -60,6 +66,21 @@ ggplot(ident_race, aes(x=race, y=sum_ident)) +
   theme(axis.title.y = element_text(size=14))+
   xlab("")
 
+#**** this one for GSA
+ggplot(ident_race_plusmean, aes(x=race, y=sum_ident, fill=race)) +
+  geom_boxplot()+
+  ggtitle("Geoscience Identity of Senior Geoscience Majors")+
+  theme(plot.title = element_text(size = 16, face = 'bold', hjust = 0.5))+
+  theme(axis.text.x = element_text(size=14, vjust = 1))+
+  scale_x_discrete(labels = c("All Responses\n(n = 167)",
+                              "BIPOC\n(n = 68)", 
+                              "White\n(n = 78)"))+
+  xlab("")+
+  theme(axis.text.y = element_text(size=14))+
+  ylab("Strength of Geoscience Identity")+
+  theme(axis.title.y = element_text(size=14))+
+  scale_fill_manual(values=c("grey", "#5b84b1ff", "#5b84b1ff")) +
+  theme(legend.position="none")
 
 #histogram with bars NOT stacked
 
