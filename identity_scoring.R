@@ -1,6 +1,8 @@
 install.packages('car')
+install.packages('PMCMRplus')
 library(car)
 library(dplyr)
+library(PMCMRplus)
 
 
 # ------- Start chunk to run -----------
@@ -195,24 +197,61 @@ ident.II.aov <- car::Anova(racegen.lm, type = 2)
 summary(ident.II.aov)
 
 
-#more complex statistics
+#testing for violations of t-test and anova assumptions
+
 #Kolmogorov-Smirnov test for normal distribution
+?ks.test() 
+??ks.test()
 ks.test(ident_BIPOC$sum_ident, 'pnorm')
+ks.test(ident_BIPOC$sum_ident, 'pnorm', var.equal=FALSE)
+t.test(x1,y1,var.equal=FALSE)
 
 ks.test(ident_White$sum_ident, 'pnorm')
-?ks.test()    
+
+ks.test(ident_M_White$sum_ident, 'pnorm')
 #p-value is sufficiently small to indicate non-normal distribution
 #warning msg 'ties should not be present'
+#p=2.2e-16 in multiple cases because that is R's smallest positive floating-point number
+
+#can also test with a QQ plot
+ident_racegen %>% 
+  ggplot(aes(sample = sum_ident)) +
+  stat_qq() +
+  stat_qq_line(col = "goldenrod") +
+  facet_wrap(~racegen) +
+  theme_minimal() +
+  labs(title = "Normal Q-Q Plot")
+
+#rule of thumb: stdevs should not be more than double each other
+ident_racegen %>%
+  group_by(racegen) %>%
+  summarise_at(vars(sum_ident), list(name=sd))
+
+#Levene test for homogeneity of variance
+leveneTest(sum_ident ~ racegen, ident_racegen)
+
+leveneTest(sum_ident ~ race, ident_race)
 
 #Mann-Whitney U test
 #for two variables
 wilcox.test(sum_ident ~ race,
             data = ident_race,
-            exact = FALSE) #p-value = .007
+            exact = FALSE) #p-value = .03
 ?wilcox.test()
 
 #Kruskal-Wallis test: non-parametric alt for one-way ANOVA
+
 kruskal.test(sum_ident ~ racegen, data = ident_racegen)
 
 pairwise.wilcox.test(ident_racegen$sum_ident, ident_racegen$racegen,
                      p.adjust.method = "BH")
+
+#neither of the above non-parametric tests are really ideal, so
+  #using a welch's anova
+
+ident.welchs.aov <- oneway.test(sum_ident ~ racegen, data = ident_racegen, var.equal = FALSE)
+ident.welchs.aov
+
+#Games-Howell Post Hoc Test
+ident.gameshowell <- rstatix::games_howell_test(ident_racegen, sum_ident ~ racegen)
+ident.gameshowell
