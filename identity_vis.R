@@ -166,6 +166,18 @@ ggplot(ident_racegen, aes(x = sum_ident, y = racegen, fill = racegen)) +
   theme(axis.text.y = element_text(size = 10))+
   #theme(axis.ticks = element_blank(), axis.text.x = element_blank())+
   theme(legend.position = "none")
+
+ggplot(ident_race, aes(x = sum_ident, y = race, fill = race)) + 
+  geom_density_ridges(size = .5)+
+  scale_fill_viridis_d()+
+  ggtitle("Geoscience Identity of Senior Geoscience Majors")+
+  xlab(expression("Lower Geoscience Identity" %<->% "Higher Geoscience Identity"))+
+  ylab("Number of Students")+
+  theme(axis.title.x = element_text(size = 12))+
+  theme(axis.title.y = element_text(size = 12))+
+  theme(axis.text.y = element_text(size = 10))+
+  #theme(axis.ticks = element_blank(), axis.text.x = element_blank())+
+  theme(legend.position = "none")
   
 #Misc and old
 #histogram with stacked datasets (not ideal)

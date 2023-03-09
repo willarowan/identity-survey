@@ -1,8 +1,10 @@
 install.packages('car')
 install.packages('PMCMRplus')
+install.packages('e1071')
 library(car)
 library(dplyr)
 library(PMCMRplus)
+library(e1071)
 
 
 # ------- Start chunk to run -----------
@@ -105,6 +107,11 @@ ident_race %>% # using dplyr
   group_by(race) %>%
   summarise(avg_sum_ident = mean(sum_ident, na.rm=TRUE))
 
+ident_racegen %>% # using dplyr
+  group_by(racegen) %>%
+  summarise(avg_sum_ident = mean(sum_ident, na.rm=TRUE))
+
+
 #total identity score by gender identity - returns all combos
 aggregate(formula = sum ~ demo_1,
           FUN = mean,
@@ -118,7 +125,7 @@ t.test(formula = sum ~ demo_1,
 aov(formula = sum ~ demo_4,
     data = ident)
 
-#Evaluating major hypothesis of project
+#Evaluating first research question
 #difference in identity scores between White and BIPOC?
 t.test(x = ident_BIPOC$sum,
        y = ident_White$sum)
@@ -208,7 +215,10 @@ t.test(x1,y1,var.equal=FALSE)
 
 ks.test(ident_White$sum_ident, 'pnorm')
 
+ks.test(ident_M_BIPOC$sum_ident, 'pnorm')
+ks.test(ident_WNB_BIPOC$sum_ident, 'pnorm')
 ks.test(ident_M_White$sum_ident, 'pnorm')
+ks.test(ident_WNB_White$sum_ident, 'pnorm')
 #p-value is sufficiently small to indicate non-normal distribution
 #warning msg 'ties should not be present'
 #p=2.2e-16 in multiple cases because that is R's smallest positive floating-point number
@@ -231,6 +241,17 @@ ident_racegen %>%
 leveneTest(sum_ident ~ racegen, ident_racegen)
 
 leveneTest(sum_ident ~ race, ident_race)
+
+#checking skewness and kurtosis
+?kurtosis()
+?skewness()
+#of each racegen group?
+f <- function(x)c(skew = skewness(x, type = 2),kurt = kurtosis(x, type = 2))
+                  aggregate(sum_ident~racegen, data = ident_racegen,FUN = f)
+#of whole set?
+skewness(ident_racegen$sum_ident, type = 2)
+kurtosis(ident_racegen$sum_ident, type = 2)
+
 
 #Mann-Whitney U test
 #for two variables
@@ -255,3 +276,7 @@ ident.welchs.aov
 #Games-Howell Post Hoc Test
 ident.gameshowell <- rstatix::games_howell_test(ident_racegen, sum_ident ~ racegen)
 ident.gameshowell
+
+#and a welch's t-test (we've already been using that)
+t.test(x = ident_White$sum, 
+       y = ident_BIPOC$sum)
