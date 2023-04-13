@@ -70,3 +70,35 @@ plot(boot_ident_output)
 
 # Obtaining a confidence interval of 95%
 boot.ci(boot_ident_output, type="bca")
+
+
+#####
+
+#testing tutorial from Zieffler et al.
+## Function to compute the mean difference
+mean.diff <- mean(ident_White$sum_ident) - mean(ident_BIPOC$sum_ident)
+
+mean.diff.np <- function(ident_race, indices) {
+d <- ident_race[indices, ]
+mean(d$sum_ident[1:68]) - mean(d$sum_ident[69:147])
+}
+
+## Carry out the nonparametric bootstrap
+nonpar.boot <- boot(data = ident_race, statistic = mean.diff.np,
+                    9999)
+
+## Plot the bootstrap distribution
+plot(density(nonpar.boot$t))
+
+## Draw a vertical line at 0
+abline(v=0)
+
+## Mean of the bootstrap distribution
+mean(nonpar.boot$t)
+
+## Standard error of bootstrap distribution
+sd(nonpar.boot$t)
+
+## Count the mean differences as or more extreme than xx
+mean.diff.ex <- length(nonpar.boot$t[abs(nonpar.boot$t) >= mean.diff])
+(mean.diff.ex+1)/(9999 + 1)
