@@ -1,7 +1,14 @@
 install.packages('boot')
 install.packages('nptest')
+install.packages('MBESS')
+install.packages('effectsize')
+install.packages('lmboot')
 library(boot)
 library(nptest)
+library(MBESS)
+library(effectsize)
+options(es.use_symbols = TRUE)
+library(lmboot)
 
 ?boot
 
@@ -99,6 +106,19 @@ mean(nonpar.boot$t)
 ## Standard error of bootstrap distribution
 sd(nonpar.boot$t)
 
-## Count the mean differences as or more extreme than xx
+## Count the resamples where mean differences are as or more extreme than orig
+  ##mean differences
 mean.diff.ex <- length(nonpar.boot$t[abs(nonpar.boot$t) >= mean.diff])
 (mean.diff.ex+1)/(9999 + 1)
+
+#reporting effect sizes
+cohens_d(sum_ident ~ race, data = ident_race)
+
+#testing ANOVA bootstrap
+myANOVA1 <- ANOVA.boot(mpg~as.factor(cyl), B = 9999, type = "residual", 
+              wild.dist = "normal", seed = NULL, data=mtcars,keep.boot.resp = FALSE)
+myANOVA1$`p-values`
+
+aov.boot_racegen <- ANOVA.boot(sum_ident~racegen, B = 9999, type = "residual", wild.dist = "normal", 
+           seed = NULL, data = ident_racegen, keep.boot.resp = FALSE)
+aov.boot_racegen$'p-values'
