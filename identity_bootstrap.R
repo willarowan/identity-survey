@@ -3,12 +3,14 @@ install.packages('nptest')
 install.packages('MBESS')
 install.packages('effectsize')
 install.packages('lmboot')
+install.packages('WRS2')
 library(boot)
 library(nptest)
 library(MBESS)
 library(effectsize)
 options(es.use_symbols = TRUE)
 library(lmboot)
+library(WRS2)
 
 ?boot
 
@@ -79,7 +81,7 @@ plot(boot_ident_output)
 boot.ci(boot_ident_output, type="bca")
 
 
-#####
+##### This one!
 
 #testing tutorial from Zieffler et al.
 ## Function to compute the mean difference
@@ -114,11 +116,20 @@ mean.diff.ex <- length(nonpar.boot$t[abs(nonpar.boot$t) >= mean.diff])
 #reporting effect sizes
 cohens_d(sum_ident ~ race, data = ident_race)
 
-#testing ANOVA bootstrap
-myANOVA1 <- ANOVA.boot(mpg~as.factor(cyl), B = 9999, type = "residual", 
-              wild.dist = "normal", seed = NULL, data=mtcars,keep.boot.resp = FALSE)
+
+###testing ANOVA bootstrap
+
+#lmboot package. this way will only yield p-value, no post-hoc
+myANOVA1 <- ANOVA.boot(mpg~as.factor(cyl), data=mtcars)
 myANOVA1$`p-values`
 
 aov.boot_racegen <- ANOVA.boot(sum_ident~racegen, B = 9999, type = "residual", wild.dist = "normal", 
            seed = NULL, data = ident_racegen, keep.boot.resp = FALSE)
 aov.boot_racegen$'p-values'
+
+#WRS2 package. percentile t method of bootstrapping for 1-way ANOVA
+#bootstrap with one-way anova, means-trimmed is tr=
+t1waybt(sum_ident~racegen,tr=.2,nboot=4999, data=ident_racegen)
+
+#pairwise post-hoc tests
+mcppb20(sum_ident~racegen,tr=.2,nboot=4999, data=ident_racegen)
