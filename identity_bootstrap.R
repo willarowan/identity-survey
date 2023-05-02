@@ -133,3 +133,6 @@ t1waybt(sum_ident~racegen,tr=.2,nboot=4999, data=ident_racegen)
 
 #pairwise post-hoc tests
 mcppb20(sum_ident~racegen,tr=.2,nboot=4999, data=ident_racegen)
+
+#and can we also do t-tests?
+yuenbt(formula = sum_ident~race, data = ident_race, tr = 0.2, nboot = 4999)
