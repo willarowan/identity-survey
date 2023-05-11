@@ -94,7 +94,7 @@ mean(d$sum_ident[1:68]) - mean(d$sum_ident[69:147])
 
 ## Carry out the nonparametric bootstrap
 nonpar.boot <- boot(data = ident_race, statistic = mean.diff.np,
-                    9999)
+                    4999)
 
 ## Plot the bootstrap distribution
 plot(density(nonpar.boot$t))
@@ -111,7 +111,7 @@ sd(nonpar.boot$t)
 ## Count the resamples where mean differences are as or more extreme than orig
   ##mean differences
 mean.diff.ex <- length(nonpar.boot$t[abs(nonpar.boot$t) >= mean.diff])
-(mean.diff.ex+1)/(9999 + 1)
+(mean.diff.ex+1)/(4999 + 1)
 
 #reporting effect sizes
 cohens_d(sum_ident ~ race, data = ident_race)
@@ -129,10 +129,11 @@ aov.boot_racegen$'p-values'
 
 #WRS2 package. percentile t method of bootstrapping for 1-way ANOVA
 #bootstrap with one-way anova, means-trimmed is tr=
-t1waybt(sum_ident~racegen,tr=.2,nboot=4999, data=ident_racegen)
+boot.racegen <- t1waybt(sum_ident~racegen,tr=.2,nboot=4999, data=ident_racegen)
+hist(boot.racegen$test)
 
 #pairwise post-hoc tests
-mcppb20(sum_ident~racegen,tr=.2,nboot=4999, data=ident_racegen)
+bootpairwise.racegen <- mcppb20(sum_ident~racegen,tr=.2,nboot=4999, data=ident_racegen)
 
 #and can we also do t-tests?
-yuenbt(formula = sum_ident~race, data = ident_race, tr = 0.2, nboot = 4999)
+boot.race <- yuenbt(formula = sum_ident~race, data = ident_race, tr = 0.2, nboot = 4999)
