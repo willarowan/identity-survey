@@ -4,7 +4,7 @@ library(dplyr)
 
 # ----- Run everything --------
 
-results <- read.csv(file = 'https://raw.githubusercontent.com/willarowan/identity-survey/main/Survey_9_14_22.csv')
+results <- read.csv(file = 'https://raw.githubusercontent.com/willarowan/identity-survey/main/survey-exports/Survey_9_14_22.csv')
 survey <- results #make a copy
 
 #get rid of unwanted rows/columns, invalid responses
