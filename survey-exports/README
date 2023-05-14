@@ -1,0 +1,4 @@
+Files with Survey_mm_dd_yy are exported from Qualtrics, containing survey responses.
+(I made exports in different points in time as people took the survey)
+Files with Survey_coded are exported from Atlas.ti. One column for each code, one row for each "quotation". 
+There's a binary of whether or not a given code shows up in a given quotation.

@@ -30,4 +30,12 @@ survey_mixedmethods <- as.data.frame(survey_mixedmethods)
 ident_mixedmethods <- subset(survey_mixedmethods_rev,select=c(ident_1:ident_9,ident_15:ident_20))
 ident_mixedmethods <- ident_mixedmethods %>%
   mutate(ident_sum = rowSums(across(c(ident_1:ident_20))))
+<<<<<<< HEAD:mixedmethods.R
 survey_mixedmethods <- cbind(ident_mixedmethods$ident_sum, survey_mixedmethods)
+=======
+survey_mixedmethods <- cbind(survey_mixedmethods, ident_mixedmethods$ident_sum)
+
+#old
+ident_mixedmethods <- apply(ident,2,as.numeric) #coerce from char to numeric
+sum_ident <- apply(ident,1,sum) #total identity score of each entry
+>>>>>>> bb2b947e9e3f2022b811d6a095df70e696f727b7:mixedmethods2.R
