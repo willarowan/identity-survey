@@ -81,7 +81,7 @@ plot(boot_ident_output)
 boot.ci(boot_ident_output, type="bca")
 
 
-##### This one!
+##### Zieffler et al. can compare 2 groups successfully
 
 #testing tutorial from Zieffler et al.
 ## Function to compute the mean difference
@@ -117,7 +117,7 @@ mean.diff.ex <- length(nonpar.boot$t[abs(nonpar.boot$t) >= mean.diff])
 cohens_d(sum_ident ~ race, data = ident_race)
 
 
-###testing ANOVA bootstrap
+###lmboot doesn't do pairwise
 
 #lmboot package. this way will only yield p-value, no post-hoc
 myANOVA1 <- ANOVA.boot(mpg~as.factor(cyl), data=mtcars)
@@ -126,6 +126,8 @@ myANOVA1$`p-values`
 aov.boot_racegen <- ANOVA.boot(sum_ident~racegen, B = 9999, type = "residual", wild.dist = "normal", 
            seed = NULL, data = ident_racegen, keep.boot.resp = FALSE)
 aov.boot_racegen$'p-values'
+
+### This is the one! WRS2 package by Mair and Wilcox
 
 #WRS2 package. percentile t method of bootstrapping for 1-way ANOVA
 #bootstrap with one-way anova, means-trimmed is tr=
