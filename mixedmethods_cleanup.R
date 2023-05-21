@@ -30,7 +30,6 @@ survey_mixedmethods <- as.data.frame(survey_mixedmethods)
 ident_mixedmethods <- subset(survey_mixedmethods_rev,select=c(ident_1:ident_9,ident_15:ident_20))
 ident_mixedmethods <- ident_mixedmethods %>%
   mutate(ident_sum = rowSums(across(c(ident_1:ident_20))))
-survey_mixedmethods <- cbind(ident_mixedmethods$ident_sum, survey_mixedmethods)
 survey_mixedmethods <- cbind(survey_mixedmethods, ident_mixedmethods$ident_sum)
 
 #old
