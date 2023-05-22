@@ -1,8 +1,12 @@
 fact <- survey_rev[,grepl("^fact",names(survey_rev))] #just factors score columns
 demo <- survey_rev[,grepl("^demo",names(survey_rev))] #just demo info
 fact <- apply(fact,2,as.numeric, ra.rm=TRUE) #coerce from char to numeric
-sum_fact <- apply(fact,1,sum) #total factor score of each entry
-fact <- data.frame(cbind(fact,sum_fact)) #add sum scores as new column, coerce back to dataframe
+fact<- data.frame(fact) #coerce to dataframe
+#add row with sum of factors ratings
+#fact<- fact %>%
+#  mutate(sum_fact=select(., fact_1:fact_14) %>% rowSums(na.rm=TRUE))
+#fact %>%
+#  bind_rows(summarise_all(., ~if(is.numeric(.)) sum(.) else "Total"))
 fact <- as.data.frame(cbind(fact,demo)) #bind with demo, coerce to dataframe
 
 #BIPOC and White subgroups
