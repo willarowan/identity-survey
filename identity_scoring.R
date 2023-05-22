@@ -78,9 +78,9 @@ ident_M_BIPOC <- ident_BIPOC[grep("Male", ident_BIPOC$demo_1), ]
 #Add column wtih race & gender identifiers
 #dataframe with groups of BIPOC/White, WNB/Male
 ident_M_BIPOC$racegen <- c("BIPOC, Male")
-ident_WNB_BIPOC$racegen <- c("BIPOC, Women and Non-Binary")
+ident_WNB_BIPOC$racegen <- c("BIPOC, Female and Non-Binary")
 ident_M_White$racegen <- c("White, Male")
-ident_WNB_White$racegen <- c("White, Women and Non-Binary")
+ident_WNB_White$racegen <- c("White, Female and Non-Binary")
 ident_racegen <- rbind(ident_M_White,ident_WNB_White, ident_M_BIPOC,ident_WNB_BIPOC)
 
 #Add column with race identifiers
