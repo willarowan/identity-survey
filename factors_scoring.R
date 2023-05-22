@@ -26,9 +26,9 @@ fact_M_BIPOC <- fact_BIPOC[grep("Male", fact_BIPOC$demo_1), ]
 #Add column wtih race & gender identifiers
 #dataframe with groups of BIPOC/White, WNB/Male
 fact_M_BIPOC$racegen <- c("BIPOC, Male")
-fact_WNB_BIPOC$racegen <- c("BIPOC, Women and Non-Binary")
+fact_WNB_BIPOC$racegen <- c("BIPOC, Female and Non-Binary")
 fact_M_White$racegen <- c("White, Male")
-fact_WNB_White$racegen <- c("White, Women and Non-Binary")
+fact_WNB_White$racegen <- c("White, Female and Non-Binary")
 fact_racegen <- rbind(fact_M_White,fact_WNB_White, fact_M_BIPOC,fact_WNB_BIPOC)
 
 #Add column with race identifiers
