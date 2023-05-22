@@ -1,3 +1,5 @@
+library(dplyr)
+
 fact <- survey_rev[,grepl("^fact",names(survey_rev))] #just factors score columns
 demo <- survey_rev[,grepl("^demo",names(survey_rev))] #just demo info
 fact <- apply(fact,2,as.numeric, ra.rm=TRUE) #coerce from char to numeric
@@ -21,7 +23,7 @@ fact_WNB_White <- fact_White[grep("Female|Non-Binary|Intersex|I'll", fact_White$
 fact_M_White <- fact_White[grep("Male", fact_White$demo_1), ]
 fact_M_BIPOC <- fact_BIPOC[grep("Male", fact_BIPOC$demo_1), ]
 
-#Add column wtih race & gender factifiers
+#Add column wtih race & gender identifiers
 #dataframe with groups of BIPOC/White, WNB/Male
 fact_M_BIPOC$racegen <- c("BIPOC, Male")
 fact_WNB_BIPOC$racegen <- c("BIPOC, Women and Non-Binary")
@@ -29,10 +31,17 @@ fact_M_White$racegen <- c("White, Male")
 fact_WNB_White$racegen <- c("White, Women and Non-Binary")
 fact_racegen <- rbind(fact_M_White,fact_WNB_White, fact_M_BIPOC,fact_WNB_BIPOC)
 
-#Add column with race factifiers
+#Add column with race identifiers
 fact_BIPOC$race <- c("BIPOC")
 fact_White$race <- c("White")
 fact_race <- rbind(fact_BIPOC,fact_White)
+
+#how many of each rating for a given factor?
+fact_M_BIPOC %>%
+  count(fact_1) %>% useNA = "ifany"
+fact_M_BIPOC.counts <- data.frame(matrix(ncol = 15, nrow = 6))
+names(fact_M_BIPOC.counts) <- c(paste0("fact_",1:14),paste0("racegen"))
+fact_M_BIPOC.counts$fact_1 <- table(fact_M_BIPOC$fact_1, useNA = "ifany")
 
 #Mann-Whitney U test
 #for two variables
