@@ -37,11 +37,14 @@ fact_White$race <- c("White")
 fact_race <- rbind(fact_BIPOC,fact_White)
 
 #how many of each rating for a given factor?
-fact_M_BIPOC %>%
-  count(fact_1) %>% useNA = "ifany"
-fact_M_BIPOC.counts <- data.frame(matrix(ncol = 15, nrow = 6))
-names(fact_M_BIPOC.counts) <- c(paste0("fact_",1:14),paste0("racegen"))
-fact_M_BIPOC.counts$fact_1 <- table(fact_M_BIPOC$fact_1, useNA = "ifany")
+#fact_M_BIPOC %>% #doesn't count NAs
+  #count(fact_1)
+#make a new data frame to put counts into
+#fact_M_BIPOC.counts <- data.frame(matrix(ncol = 15, nrow = 6))
+#name columns to match
+#names(fact_M_BIPOC.counts) <- c(paste0("fact_",1:14),paste0("racegen"))
+#count ratings for each factor
+#table(fact_M_BIPOC$fact_1, useNA = "ifany")
 
 #Mann-Whitney U test
 #for two variables
