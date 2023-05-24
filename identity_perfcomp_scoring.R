@@ -22,9 +22,9 @@ ident_perfcomp_M_BIPOC <- ident_perfcomp_BIPOC[grep("Male", ident_perfcomp_BIPOC
 #Add column wtih race & gender identifiers
 #dataframe with groups of BIPOC/White, WNB/Male
 ident_perfcomp_M_BIPOC$racegen <- c("BIPOC, Male")
-ident_perfcomp_WNB_BIPOC$racegen <- c("BIPOC, Women and Non-Binary")
+ident_perfcomp_WNB_BIPOC$racegen <- c("BIPOC, Female and Non-Binary")
 ident_perfcomp_M_White$racegen <- c("White, Male")
-ident_perfcomp_WNB_White$racegen <- c("White, Women and Non-Binary")
+ident_perfcomp_WNB_White$racegen <- c("White, Female and Non-Binary")
 ident_perfcomp_racegen <- rbind(ident_perfcomp_M_White,ident_perfcomp_WNB_White, ident_perfcomp_M_BIPOC,ident_perfcomp_WNB_BIPOC)
 
 #Add column with race identifiers
@@ -33,6 +33,15 @@ ident_perfcomp_White$race <- c("White")
 ident_perfcomp_race <- rbind(ident_perfcomp_BIPOC,ident_perfcomp_White)
 
 #--- End chunk to run --- 
+
+#bootstrap ANOVA
+boot.perfcomp.racegen <- t1waybt(sum_perfcomp~racegen,tr=.2,nboot=9999, 
+                              data=ident_perfcomp_racegen)
+
+#pairwise post-hoc tests
+bootpairwise.perfcomp.racegen <- mcppb20(sum_perfcomp~racegen,tr=.2,nboot=9999, 
+                                      data=ident_perfcomp_racegen)
+
 
 #difference in identity scores between White and BIPOC?
 t.test(x = ident_perfcomp_BIPOC$sum,

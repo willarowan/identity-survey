@@ -1,3 +1,6 @@
+install.packages('tidyverse')
+library(tidyverse)
+
 surveycodedresults <- read.csv('https://raw.githubusercontent.com/willarowan/identity-survey/main/survey-exports/Survey_coded_withidentsum.csv')
 surveycoded <- surveycodedresults
 
@@ -93,5 +96,9 @@ leaving <- subset(surveycoded, Did.you.ever.consider.leaving.your.geoscience.maj
 #do they have lower identity scores than the whole group?
 t.test(x = ident$sum_ident,
        y = leaving$geoidentity_sum) #a little bit lower, not significant
-
-
+#what are their race/ethnicity identities?
+leaving %>%
+  gather(x, value) %>%
+  group_by(x)%>%
+  tally(value == 'yes')%>%
+  print(n=20)
