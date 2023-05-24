@@ -1,10 +1,12 @@
 install.packages("stringr")
 install.packages('ggridges')
 install.packages('gcookbook')
+install.packages('viridis')
 library("stringr")
 library("ggplot2")
 library('ggridges')
 library('gcookbook')
+library('viridis')
 
 # **Reminder to run data_cleanup.R and identity_scoring.R before starting**
 

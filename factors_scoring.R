@@ -1,4 +1,5 @@
 library(dplyr)
+library(WRS2)
 
 fact <- survey_rev[,grepl("^fact",names(survey_rev))] #just factors score columns
 demo <- survey_rev[,grepl("^demo",names(survey_rev))] #just demo info
@@ -45,6 +46,17 @@ fact_race <- rbind(fact_BIPOC,fact_White)
 #names(fact_M_BIPOC.counts) <- c(paste0("fact_",1:14),paste0("racegen"))
 #count ratings for each factor
 #table(fact_M_BIPOC$fact_1, useNA = "ifany")
+
+
+#are there significant differences?
+#do bootstrapped anova for each one
+fact11.boot.racegen <- t1waybt(fact_11~racegen,tr=.2,nboot=4999, data=fact_racegen)
+hist(fact1.boot.racegen$test)
+
+#pairwise post-hoc tests
+fact11.bootpairwise.racegen <- mcppb20(fact_11~racegen,tr=.2,nboot=4999, data=fact_racegen)
+
+
 
 #Mann-Whitney U test
 #for two variables
