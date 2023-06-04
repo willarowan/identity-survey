@@ -1,6 +1,8 @@
 library(dplyr)
 library(WRS2)
 
+#begin chunk to run
+
 fact <- survey_rev[,grepl("^fact",names(survey_rev))] #just factors score columns
 demo <- survey_rev[,grepl("^demo",names(survey_rev))] #just demo info
 fact <- apply(fact,2,as.numeric, ra.rm=TRUE) #coerce from char to numeric
@@ -37,6 +39,8 @@ fact_BIPOC$race <- c("BIPOC")
 fact_White$race <- c("White")
 fact_race <- rbind(fact_BIPOC,fact_White)
 
+#end chunk to run
+
 #how many of each rating for a given factor?
 #fact_M_BIPOC %>% #doesn't count NAs
   #count(fact_1)
@@ -56,7 +60,8 @@ hist(fact1.boot.racegen$test)
 #pairwise post-hoc tests
 fact11.bootpairwise.racegen <- mcppb20(fact_11~racegen,tr=.2,nboot=4999, data=fact_racegen)
 
-
+#What are standard deviations of each factor?
+lapply(fact_racegen[, 1:14], sd)
 
 #Mann-Whitney U test
 #for two variables
