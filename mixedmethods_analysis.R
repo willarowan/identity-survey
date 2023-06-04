@@ -1,9 +1,13 @@
 install.packages('tidyverse')
+<<<<<<< HEAD
 install.packages('tidyr')
 library(tidyverse)
 library(tidyr)
 
 ###Start chunk to run
+=======
+library(tidyverse)
+>>>>>>> e610bcd1c47f16f2e8fad93f98d2b3a63d43440f
 
 surveycodedresults <- read.csv('https://raw.githubusercontent.com/willarowan/identity-survey/main/survey-exports/Survey_coded_withidentsum.csv')
 surveycoded <- surveycodedresults
@@ -146,6 +150,7 @@ leaving.institutional <- subset(leaving, Covid.19.impacts=='1'|Remote.modality==
 #do they have lower identity scores than the whole group?
 t.test(x = ident$sum_ident,
        y = leaving$geoidentity_sum) #a little bit lower, not significant
+<<<<<<< HEAD
 
 #who's answering?
 interpersonal.pos%>%
@@ -154,3 +159,11 @@ interpersonal.pos%>%
   tally(value == 'yes') %>% print(n = 19)
 
 ??gather
+=======
+#what are their race/ethnicity identities?
+leaving %>%
+  gather(x, value) %>%
+  group_by(x)%>%
+  tally(value == 'yes')%>%
+  print(n=20)
+>>>>>>> e610bcd1c47f16f2e8fad93f98d2b3a63d43440f

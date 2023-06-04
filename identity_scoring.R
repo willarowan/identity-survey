@@ -99,9 +99,10 @@ ident_WNB <- ident[grep("Female|Non-Binary|Intersex", ident$demo_1), ]
 #statistics time
 
 #total identity score by racial identity - returns all combos
-aggregate(formula = sum_ident ~ race,
+aggregate(x = sum_ident ~ race,
           FUN = mean,
           data = ident_race)
+
 #alternate which also works
 ident_race %>% # using dplyr
   group_by(race) %>%
@@ -113,7 +114,7 @@ ident_racegen %>% # using dplyr
 
 
 #total identity score by gender identity - returns all combos
-aggregate(formula = sum ~ demo_1,
+aggregate(x = sum ~ demo_1,
           FUN = mean,
           data = ident)
 
