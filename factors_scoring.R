@@ -54,11 +54,18 @@ fact_race <- rbind(fact_BIPOC,fact_White)
 
 #are there significant differences?
 #do bootstrapped anova for each one
-fact11.boot.racegen <- t1waybt(fact_11~racegen,tr=.2,nboot=4999, data=fact_racegen)
-hist(fact1.boot.racegen$test)
+fact11.boot.racegen <- t1waybt(fact_6~racegen,tr=.2,nboot=4999, data=fact_racegen)
+#hist(fact1.boot.racegen$test)
 
 #pairwise post-hoc tests
-fact11.bootpairwise.racegen <- mcppb20(fact_11~racegen,tr=.2,nboot=4999, data=fact_racegen)
+fact11.bootpairwise.racegen <- mcppb20(fact_14~racegen,tr=.2,nboot=4999, data=fact_racegen)
+
+#just race?
+t1waybt(fact_11~race,tr=.2,nboot=4999, data=fact_race)
+
+#checking which group is higher when there is a small p-value
+t.test(x=fact_WNB_White$fact_12,
+       y=fact_M_BIPOC$fact_12)
 
 #What are standard deviations of each factor?
 lapply(fact_racegen[, 1:14], sd)

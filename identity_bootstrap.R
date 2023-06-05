@@ -113,10 +113,6 @@ sd(nonpar.boot$t)
 mean.diff.ex <- length(nonpar.boot$t[abs(nonpar.boot$t) >= mean.diff])
 (mean.diff.ex+1)/(4999 + 1)
 
-#reporting effect sizes
-cohens_d(sum_ident ~ race, data = ident_race)
-
-
 ###lmboot doesn't do pairwise
 
 #lmboot package. this way will only yield p-value, no post-hoc
@@ -139,3 +135,6 @@ bootpairwise.racegen <- mcppb20(sum_ident~racegen,tr=.2,nboot=4999, data=ident_r
 
 #and can we also do t-tests?
 boot.race <- yuenbt(formula = sum_ident~race, data = ident_race, tr = 0.2, nboot = 4999)
+
+#reporting effect sizes (need package effectsize)
+cohens_d(sum_ident ~ race, data = ident_race)
