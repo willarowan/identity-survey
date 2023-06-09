@@ -158,10 +158,14 @@ t.test(x = ident$sum_ident,
        y = leaving$geoidentity_sum) #a little bit lower, not significant
 
 #who's answering?
-interpersonal.pos%>%
+int.aff%>%
   gather(x, value)%>%
   group_by(x)%>%
   tally(value == 'yes') %>% print(n = 19)
+
+supp.rel.white <- subset(supp.rel, 
+                  DG_What.is.your.ethnicity...Non.Hispanic.or.Latino =='yes' &
+                  DG_What.is.your.racial.background...White =='yes')
 
 ??gather
 #what are their race/ethnicity identities?

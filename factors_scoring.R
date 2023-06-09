@@ -1,5 +1,7 @@
+install.packages('psych')
 library(dplyr)
 library(WRS2)
+library(psych)
 
 #begin chunk to run
 
