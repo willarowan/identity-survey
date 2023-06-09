@@ -58,8 +58,11 @@ bootpairwise.perfcomp.racegen <- mcppb20(sum_perfcomp~racegen,tr=.2,nboot=9999,
 perfcompmen <- ident_perfcomp_racegen[grep("Male", ident_perfcomp_racegen$racegen), ]
 yuenbt(formula = sum_perfcomp~racegen, 
        data = perfcompmen, tr = 0.2, nboot = 4999)
-t.test(x = ident_perfcomp_M_BIPOC,
-       y = ident_perfcomp_M_White)
+t.test(x = ident_perfcomp_M_BIPOC$sum_perfcomp,
+       y = ident_perfcomp_M_White$sum_perfcomp)
+
+t.test(x = ident_perfcomp_M_BIPOC$sum_perfcomp,
+       y = ident_perfcomp_WNB_BIPOC$sum_perfcomp)
 
 
 #difference in identity scores between White and BIPOC?

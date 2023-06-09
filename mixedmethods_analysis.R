@@ -9,87 +9,96 @@ library(tidyverse)
 surveycodedresults <- read.csv('https://raw.githubusercontent.com/willarowan/identity-survey/main/survey-exports/Survey_coded_withidentsum.csv')
 surveycoded <- surveycodedresults
 
-qual.HispLat <- subset(surveycoded, DG_What.is.your.ethnicity...Hispanic.or.Latino == '1')
+#qual.HispLat <- subset(surveycoded, DG_What.is.your.ethnicity...Hispanic.or.Latino == '1')
 
 #Let's make groups of themes
-interpersonal <- subset(surveycoded, Family.commitments=='1'|Family.support=='1'|
-                        Mentors=='1'|Respect.from.professors=='1'|
-                        Peer.support=='1'|Role.models=='1'|
-                        Encounters.with.ageism=='1'|
+supp.rel <- subset(surveycoded, Family.commitments=='1'& Sentiment..Positive=='1'|
+                        Family.support=='1'& Sentiment..Positive=='1'|
+                        Mentors=='1'|
+                        Respect.from.professors=='1'& Sentiment..Positive=='1'|
+                        Peer.support=='1'|Role.models=='1')
+microagg <- subset(surveycoded, Encounters.with.ageism=='1'|
                         Encounters.with.homophobia=='1'|
                         Encounters.with.sexism=='1'|Encounters.with.racism=='1')
-cultural.social <- subset(surveycoded, Department.culture=='1'|
-                        Geoscience.culture=='1'|Sense.of.belonging=='1'|
+excl.cult.soc <- subset(surveycoded, Department.culture=='1'& Sentiment..Negative=='1'|
+                        Geoscience.culture=='1'& Sentiment..Negative=='1'|
+                        Sense.of.belonging=='1'& Sentiment..Negative=='1'|
                         Cultural.differences=='1'|
                         Ethnic.cultural.values.and.socialization=='1'|
                         Encounters.with.ageism=='1'|
                         Encounters.with.homophobia=='1'|
                         Encounters.with.sexism=='1'|Encounters.with.racism=='1')
-individual <- subset(surveycoded, Interest=='1'|Burnout=='1'|
-                       Imposter.syndrome=='1'|Mental.health=='1'|
-                       Geoscience.self.efficacy=='1'|
-                       Math.self.efficacy=='1'|Personal.characteristics=='1'|
+belong.comm <- subset(surveycoded, Department.culture=='1'& Sentiment..Positive=='1'|
+                        Geoscience.culture=='1'& Sentiment..Positive=='1'|
+                        Sense.of.belonging=='1'& Sentiment..Positive=='1')
+int.aff <- subset(surveycoded, Interest=='1'& Sentiment..Positive=='1'|
+                       Geoscience.self.efficacy=='1'& Sentiment..Positive=='1'|
+                       Math.self.efficacy=='1'& Sentiment..Positive=='1'|
                        Connection.love.of.nature=='1'|Helping.others=='1'|
                        Protecting.the.environment=='1')
-career <- subset(surveycoded, Career.development.activities=='1'|
-                   Geoscience.internships=='1'|Geoscience.job.market=='1'|
-                   Knowledge.of.geoscience.careers=='1'|Salary=='1'|
-                   Outdoors.work=='1')
-classroom <- subset(surveycoded, Engaging.geoscience.course.content=='1'|
-                      Indigenous.knowledge=='1'|Course.selection=='1'|
-                      Introductory.Geoscience=='1'|
-                      Required.STEM.courses=='1'|Effective.instruction=='1'|
-                      Field.experiences=='1')
-extracurricular <- subset(surveycoded, Awareness.of.geoscience=='1'|
-                    Department.academics=='1'|Extracurricular.activities=='1'|
+inadequacy <- subset(surveycoded, Burnout=='1'|
+                       Imposter.syndrome=='1'|Mental.health=='1'|
+                       Geoscience.self.efficacy=='1'& Sentiment..Negative=='1'|
+                       Math.self.efficacy=='1'& Sentiment..Negative=='1'|
+                       Personal.characteristics=='1')
+career <- subset(surveycoded, Career.development.activities=='1'& Sentiment..Positive=='1'|
+                   Geoscience.internships=='1'& Sentiment..Positive=='1'|
+                   Geoscience.job.market=='1'& Sentiment..Positive=='1'|
+                   Knowledge.of.geoscience.careers=='1'& Sentiment..Positive=='1'|
+                   Salary=='1'& Sentiment..Positive=='1'|
+                   Outdoors.work=='1'& Sentiment..Positive=='1')
+career.lack <- subset(surveycoded, Career.development.activities=='1'& Sentiment..Negative=='1'|
+                   Geoscience.internships=='1'& Sentiment..Negative=='1'|
+                   Geoscience.job.market=='1'& Sentiment..Negative=='1'|
+                   Knowledge.of.geoscience.careers=='1'& Sentiment..Negative=='1'|
+                   Salary=='1'& Sentiment..Negative=='1'|
+                   Outdoors.work=='1'& Sentiment..Negative=='1')
+eng.classroom <- subset(surveycoded, Engaging.geoscience.course.content=='1'& Sentiment..Positive=='1'|
+                      Course.selection=='1'& Sentiment..Positive=='1'|
+                      Introductory.Geoscience=='1'& Sentiment..Positive=='1'|
+                      Required.STEM.courses=='1'& Sentiment..Positive=='1'|Effective.instruction=='1'& Sentiment..Positive=='1'|
+                      Field.experiences=='1'& Sentiment..Positive=='1')
+othering <- subset(surveycoded, Indigenous.knowledge=='1'|Effective.instruction=='1'& Sentiment..Negative=='1'|
+                     Field.experiences=='1'& Sentiment..Negative=='1')
+extracurricular <- subset(surveycoded, Extracurricular.activities=='1'|
                     Lab.reading.groups=='1'|Teaching.experiences=='1'|
-                    Research.experiences=='1'|Outdoor.experiences=='1'|
+                    Research.experiences=='1'& Sentiment..Positive=='1'|Outdoor.experiences=='1'& Sentiment..Positive=='1'|
                     Travel=='1')
-institutional <- subset(surveycoded, Covid.19.impacts=='1'|Remote.modality=='1'|
-                          Representation.in.faculty.and.staff=='1'|
-                          Fiscal.abilities=='1'|Department.funding=='1'|
-                          Physical.accessibility=='1'|
-                          Encounters.with.ageism=='1'|
-                          Encounters.with.homophobia=='1'|
-                          Encounters.with.sexism=='1'|Encounters.with.racism=='1')
-
-#Positive vs. negative experiences for each theme
-interpersonal.neg <- subset(interpersonal, Sentiment..Negative=='1')
-interpersonal.pos <- subset(interpersonal, Sentiment..Positive=='1')
-cultural.social.neg <- subset(cultural.social, Sentiment..Negative=='1')
-cultural.social.pos <- subset(cultural.social, Sentiment..Positive=='1')
-individual.neg <- subset(individual, Sentiment..Negative=='1')
-individual.pos <- subset(individual, Sentiment..Positive=='1')
-career.neg <- subset(career, Sentiment..Negative=='1')
-career.pos <- subset(career, Sentiment..Positive=='1')
-classroom.neg <- subset(classroom, Sentiment..Negative=='1')
-classroom.pos <- subset(classroom, Sentiment..Positive=='1')
-extracurricular.neg <- subset(extracurricular, Sentiment..Negative=='1')
-extracurricular.pos <- subset(extracurricular, Sentiment..Positive=='1')
-institutional.neg <- subset(institutional, Sentiment..Negative=='1')
-institutional.pos <- subset(institutional, Sentiment..Positive=='1')
+issues.course <- subset(surveycoded, Required.STEM.courses=='1'& Sentiment..Negative=='1'|
+                          Required.geoscience.courses=='1'& Sentiment..Negative=='1'|
+                          Awareness.of.geoscience=='1'& Sentiment..Negative=='1'|
+                          Department.academics=='1'&Sentiment..Negative=='1')
+str.barr <- subset(surveycoded, Covid.19.impacts=='1'|Remote.modality=='1'|
+                          Representation.in.faculty.and.staff=='1'& Sentiment..Negative=='1'|
+                          Fiscal.abilities=='1'|Department.funding=='1'& Sentiment..Negative=='1'|
+                          Physical.accessibility=='1'& Sentiment..Negative=='1')
 
 #Adding a column with name of theme
-interpersonal.neg$theme <- c("interpersonal.neg")
-interpersonal.pos$theme <- c("interpersonal.pos")
-cultural.social.neg$theme <- c("cultural.social.neg")
-cultural.social.pos$theme <- c("cultural.social.pos")
-individual.neg$theme <- c("individual.neg")
-individual.pos$theme <- c("individual.pos")
-career.neg$theme <- c("career.neg")
-career.pos$theme <- c("career.pos")
-classroom.neg$theme <- c("classroom.neg")
-classroom.pos$theme <- c("classroom.pos")
-extracurricular.neg$theme <- c("extracurricular.neg")
-extracurricular.pos$theme <- c("extracurricular.pos")
-institutional.neg$theme <- c("institutional.neg")
-institutional.pos$theme <- c("institutional.pos")
-surveycoded.themes <- rbind(interpersonal.neg,interpersonal.pos,
-                            cultural.social.neg,cultural.social.pos,
-                            individual.neg,individual.pos,
-                            career.neg,career.pos,classroom.neg,classroom.pos,
-                            extracurricular.neg,extracurricular.pos,
-                            institutional.neg,institutional.pos)
+supp.rel$theme <- c("supp.rel")
+microagg$theme <- c("microagg")
+excl.cult.soc$theme <- c("excl.cult.soc")
+belong.comm$theme <- c("belong.comm")
+int.aff$theme <- c("int.aff")
+inadequacy$theme <- c("inadequacy")
+career$theme <- c("career")
+career.lack$theme <- c("career.lack")
+eng.classroom$theme <- c("eng.classroom")
+othering$theme <- c("othering")
+extracurricular$theme <- c("extracurricular")
+issues.course$theme <- c("issues.course")
+str.barr$theme <- c("str.barr")
+surveycoded.themes <- rbind(supp.rel,microagg,excl.cult.soc,belong.comm,
+                            int.aff,inadequacy,career,career.lack,
+                            eng.classroom,othering,
+                            extracurricular,issues.course,str.barr)
+retention.themes<- rbind(supp.rel,belong.comm,int.aff,career,eng.classroom,
+                         extracurricular)
+exclusion.themes<- rbind(microagg,excl.cult.soc,inadequacy,career.lack,
+                         othering,issues.course,str.barr)
+
+#any difference in identity score? No
+t.test(x=retention.themes$geoidentity_sum,
+       y=exclusion.themes$geoidentity_sum)
 
 ### End chunk to run
 

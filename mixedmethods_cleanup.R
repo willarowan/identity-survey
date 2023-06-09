@@ -1,5 +1,5 @@
 library(dplyr)
-survey_mixedmethods <- read.csv("~/R/Thesis_R/Survey_complete_mixedmethods.csv")
+survey_mixedmethods <- read.csv(file = "https://raw.githubusercontent.com/willarowan/identity-survey/main/survey-exports/Survey_complete_mixedmethods.csv")
 
 #rename columns
 names(survey_mixedmethods) <- c(paste0("ident_",1:20),paste0("fact_",1:15),
@@ -27,7 +27,7 @@ survey_mixedmethods[,columnsToReverse] <- 6-survey_mixedmethods[,columnsToRevers
 survey_mixedmethods <- as.data.frame(survey_mixedmethods)
 
 #sum identity scores into a new column
-ident_mixedmethods <- subset(survey_mixedmethods_rev,select=c(ident_1:ident_9,ident_15:ident_20))
+ident_mixedmethods <- subset(survey_mixedmethods,select=c(ident_1:ident_9,ident_15:ident_20))
 ident_mixedmethods <- ident_mixedmethods %>%
   mutate(ident_sum = rowSums(across(c(ident_1:ident_20))))
 survey_mixedmethods <- cbind(survey_mixedmethods, ident_mixedmethods$ident_sum)

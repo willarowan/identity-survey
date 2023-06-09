@@ -13,9 +13,9 @@ library('viridis')
 #Add column wtih race & gender identifiers
 #dataframe with groups of BIPOC/White, WNB/Male
 ident_M_BIPOC$racegen <- c("BIPOC, Male")
-ident_WNB_BIPOC$racegen <- c("BIPOC, Women and Non-Binary")
+ident_WNB_BIPOC$racegen <- c("BIPOC, Female and Non-Binary")
 ident_M_White$racegen <- c("White, Male")
-ident_WNB_White$racegen <- c("White, Women and Non-Binary")
+ident_WNB_White$racegen <- c("White, Female and Non-Binary")
 ident_racegen <- rbind(ident_M_White,ident_WNB_White, ident_M_BIPOC,ident_WNB_BIPOC)
 
 #Add column with race identifiers
@@ -45,10 +45,10 @@ ggplot(ident_racegen_plusmean, aes(x=racegen, y=sum_ident, fill=racegen)) +
   theme(plot.title = element_text(size = 16, face = 'bold', hjust = 0.5))+
   theme(axis.text.x = element_text(size=14, vjust = 1))+
   scale_x_discrete(labels = c("All Responses\n(n = 167)",
+                              "BIPOC, Female\nand Non-Binary\n(n = 37)", 
                               "BIPOC, Male\n(n = 27)", 
-                              "BIPOC, Women\nand Non-Binary\n(n = 37)", 
-                              "White, Male\n(n = 24)",
-                              "White, Women\nand Non-Binary\n(n = 51)"))+
+                              "White, Female\nand Non-Binary\n(n = 51)",
+                              "White, Male\n(n = 24)"))+
   xlab("")+
   theme(axis.text.y = element_text(size=14))+
   ylab("Strength of Geoscience Identity")+ 
@@ -180,7 +180,34 @@ ggplot(ident_race, aes(x = sum_ident, y = race, fill = race)) +
   theme(axis.text.y = element_text(size = 10))+
   #theme(axis.ticks = element_blank(), axis.text.x = element_blank())+
   theme(legend.position = "none")
-  
+
+#For performance/competence
+ggplot(ident_perfcomp_racegen, aes(x = sum_perfcomp, y = racegen, fill = racegen)) + 
+  geom_density_ridges(size = .5)+
+  scale_fill_viridis_d()+
+  ggtitle("Performance/Competence")+
+  xlab(expression("Lower Performance/Competence" %<->% "Higher Performance/Competence"))+
+  ylab("Number of Students")+
+  theme(axis.title.x = element_text(size = 12))+
+  theme(axis.title.y = element_text(size = 12))+
+  theme(axis.text.y = element_text(size = 10))+
+  #theme(axis.ticks = element_blank(), axis.text.x = element_blank())+
+  theme(legend.position = "none")
+
+#For recognition
+ggplot(ident_recog_racegen, aes(x = sum_recog, y = racegen, fill = racegen)) + 
+  geom_density_ridges(size = .5)+
+  scale_fill_viridis_d()+
+  ggtitle("Recognition")+
+  xlab(expression("Lower Recognition" %<->% "Higher Recognition"))+
+  ylab("Number of Students")+
+  theme(axis.title.x = element_text(size = 12))+
+  theme(axis.title.y = element_text(size = 12))+
+  theme(axis.text.y = element_text(size = 10))+
+  #theme(axis.ticks = element_blank(), axis.text.x = element_blank())+
+  theme(legend.position = "none")
+
+
 #Misc and old
 #histogram with stacked datasets (not ideal)
 hist(x = ident_BIPOC$sum,
