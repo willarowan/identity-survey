@@ -130,7 +130,7 @@ t.test(x = ident$sum_ident,
        y = leaving$geoidentity_sum) #a little bit lower, not significant
 
 #who's answering?
-str.barr%>%
+supp.rel%>%
   gather(x, value)%>%
   group_by(x)%>%
   tally(value == 'yes') %>% print(n = 19)
