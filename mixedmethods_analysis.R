@@ -110,55 +110,27 @@ surveycoded.themes %>%
 #Who considered leaving the major?
 leaving <- subset(surveycoded, Did.you.ever.consider.leaving.your.geoscience.major..If.so..why.=='1'
                   & Sentiment..Negative=='1')
-
-leaving.interpersonal <- subset(leaving, Family.commitments=='1'|Family.support=='1'|
-                                   Mentors=='1'|Respect.from.professors=='1'|
-                                   Peer.support=='1'|Role.models=='1'|
-                                   Encounters.with.ageism=='1'|
-                                   Encounters.with.homophobia=='1'|
-                                   Encounters.with.sexism=='1'|Encounters.with.racism=='1')
-
-leaving.individual <- subset(leaving, Interest=='1'|Burnout=='1'|
-                               Imposter.syndrome=='1'|Mental.health=='1'|
-                               Geoscience.self.efficacy=='1'|
-                               Math.self.efficacy=='1'|Personal.characteristics=='1'|
-                               Connection.love.of.nature=='1'|Helping.others=='1'|
-                               Protecting.the.environment=='1')
-leaving.cultural.social <- subset(leaving, Department.culture=='1'|
-                                    Geoscience.culture=='1'|Sense.of.belonging=='1'|
-                                    Cultural.differences=='1'|
-                                    Ethnic.cultural.values.and.socialization=='1'|
-                                    Encounters.with.ageism=='1'|
-                                    Encounters.with.homophobia=='1'|
-                                    Encounters.with.sexism=='1'|Encounters.with.racism=='1')
-leaving.career <- subset(leaving, Career.development.activities=='1'|
-                           Geoscience.internships=='1'|Geoscience.job.market=='1'|
-                           Knowledge.of.geoscience.careers=='1'|Salary=='1'|
-                           Outdoors.work=='1')
-leaving.classroom <- subset(leaving, Engaging.geoscience.course.content=='1'|
-                              Indigenous.knowledge=='1'|Course.selection=='1'|
-                              Introductory.Geoscience=='1'|
-                              Required.STEM.courses=='1'|Effective.instruction=='1'|
-                              Field.experiences=='1')
-leaving.extracurricular <- subset(leaving, Awareness.of.geoscience=='1'|
-                                    Department.academics=='1'|Extracurricular.activities=='1'|
-                                    Lab.reading.groups=='1'|Teaching.experiences=='1'|
-                                    Research.experiences=='1'|Outdoor.experiences=='1'|
-                                    Travel=='1')
-leaving.institutional <- subset(leaving, Covid.19.impacts=='1'|Remote.modality=='1'|
-                                  Representation.in.faculty.and.staff=='1'|
-                                  Fiscal.abilities=='1'|Department.funding=='1'|
-                                  Physical.accessibility=='1'|
-                                  Encounters.with.ageism=='1'|
-                                  Encounters.with.homophobia=='1'|
-                                  Encounters.with.sexism=='1'|Encounters.with.racism=='1')
+leaving.microagg <- subset(microagg, Did.you.ever.consider.leaving.your.geoscience.major..If.so..why.=='1'
+                  & Sentiment..Negative=='1')
+leaving.excl.cult.soc <- subset(excl.cult.soc, Did.you.ever.consider.leaving.your.geoscience.major..If.so..why.=='1'
+                  & Sentiment..Negative=='1')
+leaving.inadequacy <- subset(inadequacy, Did.you.ever.consider.leaving.your.geoscience.major..If.so..why.=='1'
+                  & Sentiment..Negative=='1')
+leaving.career.lack <- subset(career.lack, Did.you.ever.consider.leaving.your.geoscience.major..If.so..why.=='1'
+                  & Sentiment..Negative=='1')
+leaving.othering <- subset(othering, Did.you.ever.consider.leaving.your.geoscience.major..If.so..why.=='1'
+                  & Sentiment..Negative=='1')
+leaving.issues.course <- subset(issues.course, Did.you.ever.consider.leaving.your.geoscience.major..If.so..why.=='1'
+                  & Sentiment..Negative=='1')
+leaving.str.barr <- subset(str.barr, Did.you.ever.consider.leaving.your.geoscience.major..If.so..why.=='1'
+                  & Sentiment..Negative=='1')
 
 #do they have lower identity scores than the whole group?
 t.test(x = ident$sum_ident,
        y = leaving$geoidentity_sum) #a little bit lower, not significant
 
 #who's answering?
-int.aff%>%
+str.barr%>%
   gather(x, value)%>%
   group_by(x)%>%
   tally(value == 'yes') %>% print(n = 19)
