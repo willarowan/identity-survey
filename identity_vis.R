@@ -166,7 +166,7 @@ ggplot(ident_racegen, aes(x = sum_ident, y = racegen, fill = racegen)) +
   theme(axis.title.x = element_text(size = 12))+
   theme(axis.title.y = element_text(size = 12))+
   theme(axis.text.y = element_text(size = 10))+
-  #theme(axis.ticks = element_blank(), axis.text.x = element_blank())+
+  theme(axis.ticks = element_blank(), axis.text.x = element_blank())+
   theme(legend.position = "none")
 
 ggplot(ident_race, aes(x = sum_ident, y = race, fill = race)) + 
@@ -185,26 +185,26 @@ ggplot(ident_race, aes(x = sum_ident, y = race, fill = race)) +
 ggplot(ident_perfcomp_racegen, aes(x = sum_perfcomp, y = racegen, fill = racegen)) + 
   geom_density_ridges(size = .5)+
   scale_fill_viridis_d()+
-  ggtitle("Performance/Competence")+
+  ggtitle("Geoscience Identity: Performance/Competence")+
   xlab(expression("Lower Performance/Competence" %<->% "Higher Performance/Competence"))+
   ylab("Number of Students")+
   theme(axis.title.x = element_text(size = 12))+
   theme(axis.title.y = element_text(size = 12))+
   theme(axis.text.y = element_text(size = 10))+
-  #theme(axis.ticks = element_blank(), axis.text.x = element_blank())+
+  theme(axis.ticks = element_blank(), axis.text.x = element_blank())+
   theme(legend.position = "none")
 
 #For recognition
 ggplot(ident_recog_racegen, aes(x = sum_recog, y = racegen, fill = racegen)) + 
   geom_density_ridges(size = .5)+
   scale_fill_viridis_d()+
-  ggtitle("Recognition")+
+  ggtitle("Geoscience Identity: Recognition")+
   xlab(expression("Lower Recognition" %<->% "Higher Recognition"))+
   ylab("Number of Students")+
   theme(axis.title.x = element_text(size = 12))+
   theme(axis.title.y = element_text(size = 12))+
   theme(axis.text.y = element_text(size = 10))+
-  #theme(axis.ticks = element_blank(), axis.text.x = element_blank())+
+  theme(axis.ticks = element_blank(), axis.text.x = element_blank())+
   theme(legend.position = "none")
 
 
