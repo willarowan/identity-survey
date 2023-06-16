@@ -141,8 +141,8 @@ supp.rel.white <- subset(supp.rel,
 
 ??gather
 #what are their race/ethnicity identities?
-leaving %>%
+inadequacy %>%
   gather(x, value) %>%
   group_by(x)%>%
   tally(value == 'yes')%>%
-  print(n=20)
+  print(n=27)
