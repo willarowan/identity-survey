@@ -35,6 +35,20 @@ ident2$race <- c("All Responses")
 ident_race_plusmean <- rbind(ident2, ident_race)
 ident_race %>% count(race, sort = TRUE)
 
+#for recognition
+ident_recog_racegen %>% count(racegen, sort = TRUE)
+ident4 <- ident_recog
+ident4$racegen <- c("All Responses")
+ident4 %>% count(racegen, sort = TRUE)
+ident_recog_racegen_plusmean <- rbind(ident4, ident_recog_racegen)
+
+#for performance/competence
+ident_perfcomp_racegen %>% count(racegen, sort = TRUE)
+ident5 <- ident_perfcomp
+ident5$racegen <- c("All Responses")
+ident5 %>% count(racegen, sort = TRUE)
+ident_perfcomp_racegen_plusmean <- rbind(ident5, ident_perfcomp_racegen)
+
 #*** This one for GSA:
 
 #Box and whisker plots
@@ -50,8 +64,49 @@ ggplot(ident_racegen_plusmean, aes(x=racegen, y=sum_ident, fill=racegen)) +
                               "White, Female\nand Non-Binary\n(n = 51)",
                               "White, Male\n(n = 24)"))+
   xlab("")+
-  theme(axis.text.y = element_text(size=14))+
+  theme(axis.text.y = element_text(size=10))+
+  scale_y_continuous(limits=c(40,85))+
   ylab("Strength of Geoscience Identity")+ 
+  theme(axis.title.y = element_text(size=14))+
+  scale_fill_manual(values=c("grey", "#fc766aff", "#fc766aff", "#fc766aff", 
+                             "#fc766aff")) +
+  theme(legend.position="none")
+
+#recognition
+ggplot(ident_recog_racegen_plusmean, aes(x=racegen, y=sum_recog, fill=racegen)) +
+  geom_boxplot()+
+  ggtitle("Geoscience Identity: Recognition")+
+  theme(plot.title = element_text(size = 16, face = 'bold', hjust = 0.5))+
+  theme(axis.text.x = element_text(size=14, vjust = 1))+
+  scale_x_discrete(labels = c("All Responses\n(n = 167)",
+                              "BIPOC, Female\nand Non-Binary\n(n = 37)", 
+                              "BIPOC, Male\n(n = 27)", 
+                              "White, Female\nand Non-Binary\n(n = 51)",
+                              "White, Male\n(n = 24)"))+
+  xlab("")+
+  theme(axis.text.y = element_text(size=10))+
+  scale_y_continuous(limits=c(20,50))+
+  ylab("Strength of Geoscience Identity: Recognition")+ 
+  theme(axis.title.y = element_text(size=14))+
+  scale_fill_manual(values=c("grey", "#fc766aff", "#fc766aff", "#fc766aff", 
+                             "#fc766aff")) +
+  theme(legend.position="none")
+
+#perfcomp
+ggplot(ident_perfcomp_racegen_plusmean, aes(x=racegen, y=sum_perfcomp, fill=racegen)) +
+  geom_boxplot()+
+  ggtitle("Geoscience Identity: Performance/Competence")+
+  theme(plot.title = element_text(size = 16, face = 'bold', hjust = 0.5))+
+  theme(axis.text.x = element_text(size=14, vjust = 1))+
+  scale_x_discrete(labels = c("All Responses\n(n = 167)",
+                              "BIPOC, Female\nand Non-Binary\n(n = 37)", 
+                              "BIPOC, Male\n(n = 27)", 
+                              "White, Female\nand Non-Binary\n(n = 51)",
+                              "White, Male\n(n = 24)"))+
+  xlab("")+
+  theme(axis.text.y = element_text(size=10))+
+  scale_y_continuous(limits=c(12.5,37.5))+
+  ylab("Strength of Geoscience Identity:\nPerformance/Competence")+ 
   theme(axis.title.y = element_text(size=14))+
   scale_fill_manual(values=c("grey", "#fc766aff", "#fc766aff", "#fc766aff", 
                              "#fc766aff")) +

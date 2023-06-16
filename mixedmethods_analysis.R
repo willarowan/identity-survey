@@ -9,7 +9,10 @@ library(tidyverse)
 surveycodedresults <- read.csv('https://raw.githubusercontent.com/willarowan/identity-survey/main/survey-exports/Survey_coded_withidentsum.csv')
 surveycoded <- surveycodedresults
 
-#qual.HispLat <- subset(surveycoded, DG_What.is.your.ethnicity...Hispanic.or.Latino == '1')
+surveycoded.male <- subset(surveycoded, DG_Which.of.the.following.most.accurately.describes.you.You.may.choose.more.than.one...Male=='yes')
+surveycoded.male.white <- subset(surveycoded.male, 
+                              DG_What.is.your.ethnicity...Non.Hispanic.or.Latino =='yes' &
+                              DG_What.is.your.racial.background...White =='yes')
 
 #Let's make groups of themes
 supp.rel <- subset(surveycoded, Family.commitments=='1'& Sentiment..Positive=='1'|
@@ -110,20 +113,47 @@ surveycoded.themes %>%
 #Who considered leaving the major?
 leaving <- subset(surveycoded, Did.you.ever.consider.leaving.your.geoscience.major..If.so..why.=='1'
                   & Sentiment..Negative=='1')
-leaving.microagg <- subset(microagg, Did.you.ever.consider.leaving.your.geoscience.major..If.so..why.=='1'
+microagg.leaving <- subset(microagg, Did.you.ever.consider.leaving.your.geoscience.major..If.so..why.=='1'
                   & Sentiment..Negative=='1')
-leaving.excl.cult.soc <- subset(excl.cult.soc, Did.you.ever.consider.leaving.your.geoscience.major..If.so..why.=='1'
+excl.cult.soc.leaving <- subset(excl.cult.soc, Did.you.ever.consider.leaving.your.geoscience.major..If.so..why.=='1'
                   & Sentiment..Negative=='1')
-leaving.inadequacy <- subset(inadequacy, Did.you.ever.consider.leaving.your.geoscience.major..If.so..why.=='1'
+inadequacy.leaving <- subset(inadequacy, Did.you.ever.consider.leaving.your.geoscience.major..If.so..why.=='1'
                   & Sentiment..Negative=='1')
-leaving.career.lack <- subset(career.lack, Did.you.ever.consider.leaving.your.geoscience.major..If.so..why.=='1'
+career.lack.leaving <- subset(career.lack, Did.you.ever.consider.leaving.your.geoscience.major..If.so..why.=='1'
                   & Sentiment..Negative=='1')
-leaving.othering <- subset(othering, Did.you.ever.consider.leaving.your.geoscience.major..If.so..why.=='1'
+othering.leaving <- subset(othering, Did.you.ever.consider.leaving.your.geoscience.major..If.so..why.=='1'
                   & Sentiment..Negative=='1')
-leaving.issues.course <- subset(issues.course, Did.you.ever.consider.leaving.your.geoscience.major..If.so..why.=='1'
+issues.course.leaving <- subset(issues.course, Did.you.ever.consider.leaving.your.geoscience.major..If.so..why.=='1'
                   & Sentiment..Negative=='1')
-leaving.str.barr <- subset(str.barr, Did.you.ever.consider.leaving.your.geoscience.major..If.so..why.=='1'
+str.barr.leaving <- subset(str.barr, Did.you.ever.consider.leaving.your.geoscience.major..If.so..why.=='1'
                   & Sentiment..Negative=='1')
+
+#gender?
+microagg.male <- subset(microagg, 
+                DG_Which.of.the.following.most.accurately.describes.you.You.may.choose.more.than.one...Male=='yes')
+excl.cult.soc.male <- subset(excl.cult.soc, 
+                             DG_Which.of.the.following.most.accurately.describes.you.You.may.choose.more.than.one...Male=='yes')
+inadequacy.male <- subset(inadequacy, 
+                          DG_Which.of.the.following.most.accurately.describes.you.You.may.choose.more.than.one...Male=='yes')
+career.lack.male <- subset(career.lack, 
+                           DG_Which.of.the.following.most.accurately.describes.you.You.may.choose.more.than.one...Male=='yes')
+othering.male <- subset(othering, 
+                        DG_Which.of.the.following.most.accurately.describes.you.You.may.choose.more.than.one...Male=='yes')
+issues.course.male <- subset(issues.course, 
+                             DG_Which.of.the.following.most.accurately.describes.you.You.may.choose.more.than.one...Male=='yes')
+str.barr.male <- subset(str.barr, 
+                        DG_Which.of.the.following.most.accurately.describes.you.You.may.choose.more.than.one...Male=='yes')
+int.aff.male <- subset(int.aff, 
+                          DG_Which.of.the.following.most.accurately.describes.you.You.may.choose.more.than.one...Male=='yes')
+career.male <- subset(career, 
+                           DG_Which.of.the.following.most.accurately.describes.you.You.may.choose.more.than.one...Male=='yes')
+eng.classroom.male <- subset(eng.classroom, 
+                        DG_Which.of.the.following.most.accurately.describes.you.You.may.choose.more.than.one...Male=='yes')
+extracurricular.male <- subset(extracurricular, 
+                             DG_Which.of.the.following.most.accurately.describes.you.You.may.choose.more.than.one...Male=='yes')
+belong.comm.male <- subset(belong.comm, 
+                        DG_Which.of.the.following.most.accurately.describes.you.You.may.choose.more.than.one...Male=='yes')
+
 
 #do they have lower identity scores than the whole group?
 t.test(x = ident$sum_ident,
