@@ -28,6 +28,10 @@ ident_perfcomp_WNB_BIPOC$racegen <- c("BIPOC, Female and Non-Binary")
 ident_perfcomp_M_White$racegen <- c("White, Male")
 ident_perfcomp_WNB_White$racegen <- c("White, Female and Non-Binary")
 ident_perfcomp_racegen <- rbind(ident_perfcomp_M_White,ident_perfcomp_WNB_White, ident_perfcomp_M_BIPOC,ident_perfcomp_WNB_BIPOC)
+ident_perfcomp_racegen.forboot <- rbind(ident_perfcomp_WNB_BIPOC, ident_perfcomp_M_BIPOC, ident_perfcomp_WNB_White, ident_perfcomp_M_White)
+
+ident_perfcomp_WNB <- rbind(ident_perfcomp_WNB_BIPOC, ident_perfcomp_WNB_White)
+ident_perfcomp_M <- rbind(ident_perfcomp_M_BIPOC, ident_perfcomp_M_White)
 
 #Add column with race identifiers
 ident_perfcomp_BIPOC$race <- c("BIPOC")
@@ -35,6 +39,11 @@ ident_perfcomp_White$race <- c("White")
 ident_perfcomp_race <- rbind(ident_perfcomp_BIPOC,ident_perfcomp_White)
 
 #--- End chunk to run --- 
+
+#descriptive stats
+ident_perfcomp_racegen %>% # using dplyr
+  #group_by(racegen) %>%
+  summarise(avg_sum_perfcomp = mean(sum_perfcomp, na.rm=TRUE))
 
 #bootstraps
 

@@ -58,7 +58,7 @@ ggplot(ident_racegen_plusmean, aes(x=racegen, y=sum_ident, fill=racegen)) +
   ggtitle("Geoscience Identity of Senior Geoscience Majors")+
   theme(plot.title = element_text(size = 16, face = 'bold', hjust = 0.5))+
   theme(axis.text.x = element_text(size=14, vjust = 1))+
-  scale_x_discrete(labels = c("All Responses\n(n = 167)",
+  scale_x_discrete(labels = c("All Responses\n(n = 139)",
                               "BIPOC, Female\nand Non-Binary\n(n = 37)", 
                               "BIPOC, Male\n(n = 27)", 
                               "White, Female\nand Non-Binary\n(n = 51)",
@@ -78,7 +78,7 @@ ggplot(ident_recog_racegen_plusmean, aes(x=racegen, y=sum_recog, fill=racegen)) 
   ggtitle("Geoscience Identity: Recognition")+
   theme(plot.title = element_text(size = 16, face = 'bold', hjust = 0.5))+
   theme(axis.text.x = element_text(size=14, vjust = 1))+
-  scale_x_discrete(labels = c("All Responses\n(n = 167)",
+  scale_x_discrete(labels = c("All Responses\n(n = 139)",
                               "BIPOC, Female\nand Non-Binary\n(n = 37)", 
                               "BIPOC, Male\n(n = 27)", 
                               "White, Female\nand Non-Binary\n(n = 51)",
@@ -98,7 +98,7 @@ ggplot(ident_perfcomp_racegen_plusmean, aes(x=racegen, y=sum_perfcomp, fill=race
   ggtitle("Geoscience Identity: Performance/Competence")+
   theme(plot.title = element_text(size = 16, face = 'bold', hjust = 0.5))+
   theme(axis.text.x = element_text(size=14, vjust = 1))+
-  scale_x_discrete(labels = c("All Responses\n(n = 167)",
+  scale_x_discrete(labels = c("All Responses\n(n = 139)",
                               "BIPOC, Female\nand Non-Binary\n(n = 37)", 
                               "BIPOC, Male\n(n = 27)", 
                               "White, Female\nand Non-Binary\n(n = 51)",

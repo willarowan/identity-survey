@@ -1,6 +1,8 @@
 install.packages('WRS2')
 library(WRS2)
 
+#begin chunk to run
+
 #dataframe with summed recog section scores and demo info
 ident_recog <- subset(survey_rev,select=c(ident_1:ident_9))
 ident_recog <- apply(ident_recog,2,as.numeric) #coerce from char to numeric
@@ -29,6 +31,14 @@ ident_recog_M_White$racegen <- c("White, Male")
 ident_recog_WNB_White$racegen <- c("White, Female and Non-Binary")
 ident_recog_racegen <- rbind(ident_recog_M_White,ident_recog_WNB_White, 
                        ident_recog_M_BIPOC,ident_recog_WNB_BIPOC)
+ident_recog_racegen.forboot <- rbind(ident_recog_WNB_BIPOC, ident_recog_M_BIPOC, ident_recog_WNB_White, ident_recog_M_White)
+
+#end chunk to run
+
+#descriptive stats
+ident_recog_racegen %>% # using dplyr
+  #group_by(racegen) %>%
+  summarise(avg_sum_recog = mean(sum_recog, na.rm=TRUE))
 
 #bootstrap ANOVA
 boot.recog.racegen <- t1waybt(sum_recog~racegen,tr=.2,nboot=4999, 

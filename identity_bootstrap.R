@@ -131,13 +131,15 @@ boot.racegen <- t1waybt(sum_ident~racegen,tr=.2,nboot=4999, data=ident_racegen)
 hist(boot.racegen$test)
 
 #pairwise post-hoc tests
-bootpairwise.racegen <- mcppb20(sum_ident~racegen,tr=.2,nboot=9999, data=ident_racegen)
+bootpairwise.racegen <- mcppb20(sum_ident~racegen,tr=.2,nboot=4999, data=ident_racegen.forboot)
 
-mcppb20(sum_recog~racegen,tr=.2,nboot=9999, data=ident_recog_racegen)
-mcppb20(sum_perfcomp~racegen,tr=.2,nboot=9999, data=ident_perfcomp_racegen)
+mcppb20(sum_recog~racegen,tr=.2,nboot=9999, data=ident_recog_racegen.forboot)
+mcppb20(sum_perfcomp~racegen,tr=.2,nboot=9999, data=ident_perfcomp_racegen.forboot)
 
 #and can we also do t-tests?
 boot.race <- yuenbt(formula = sum_ident~race, data = ident_race, tr = 0.2, nboot = 4999)
+
+yuenbt(formula = sum_ident~racegen, data = ident_racegen, tr = 0.2, nboot = 4999)
 
 #reporting effect sizes (need package effectsize)
 cohens_d(sum_ident ~ race, data = ident_race)

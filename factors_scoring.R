@@ -34,7 +34,7 @@ fact_M_BIPOC$racegen <- c("BIPOC, Male")
 fact_WNB_BIPOC$racegen <- c("BIPOC, Female and Non-Binary")
 fact_M_White$racegen <- c("White, Male")
 fact_WNB_White$racegen <- c("White, Female and Non-Binary")
-fact_racegen <- rbind(fact_M_White,fact_WNB_White, fact_M_BIPOC,fact_WNB_BIPOC)
+fact_racegen <- rbind(fact_WNB_BIPOC,fact_M_BIPOC,fact_WNB_White,fact_M_White)
 
 #Add column with race identifiers
 fact_BIPOC$race <- c("BIPOC")
@@ -60,7 +60,7 @@ fact11.boot.racegen <- t1waybt(fact_6~racegen,tr=.2,nboot=4999, data=fact_racege
 #hist(fact1.boot.racegen$test)
 
 #pairwise post-hoc tests
-fact11.bootpairwise.racegen <- mcppb20(fact_14~racegen,tr=.2,nboot=4999, data=fact_racegen)
+fact11.bootpairwise.racegen <- mcppb20(fact_11~racegen,tr=.2,nboot=4999, data=fact_racegen)
 
 #just race?
 t1waybt(fact_11~race,tr=.2,nboot=4999, data=fact_race)

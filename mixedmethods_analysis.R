@@ -153,6 +153,8 @@ extracurricular.male <- subset(extracurricular,
                              DG_Which.of.the.following.most.accurately.describes.you.You.may.choose.more.than.one...Male=='yes')
 belong.comm.male <- subset(belong.comm, 
                         DG_Which.of.the.following.most.accurately.describes.you.You.may.choose.more.than.one...Male=='yes')
+supp.rel.male <- subset(supp.rel, 
+                           DG_Which.of.the.following.most.accurately.describes.you.You.may.choose.more.than.one...Male=='yes')
 
 
 #do they have lower identity scores than the whole group?

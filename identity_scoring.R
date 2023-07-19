@@ -82,6 +82,7 @@ ident_WNB_BIPOC$racegen <- c("BIPOC, Female and Non-Binary")
 ident_M_White$racegen <- c("White, Male")
 ident_WNB_White$racegen <- c("White, Female and Non-Binary")
 ident_racegen <- rbind(ident_M_White,ident_WNB_White, ident_M_BIPOC,ident_WNB_BIPOC)
+ident_racegen.forboot <- rbind(ident_WNB_BIPOC, ident_M_BIPOC, ident_WNB_White, ident_M_White)
 
 #Add column with race identifiers
 ident_BIPOC$race <- c("BIPOC")
