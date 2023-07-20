@@ -2,11 +2,14 @@ install.packages("stringr")
 install.packages('ggridges')
 install.packages('gcookbook')
 install.packages('viridis')
+install.packages('hrbrthemes')
 library("stringr")
 library("ggplot2")
 library('ggridges')
 library('gcookbook')
 library('viridis')
+library('forcats')
+library('hrbrthemes')
 
 # **Reminder to run data_cleanup.R and identity_scoring.R before starting**
 
@@ -275,3 +278,56 @@ hist(x = ident_White$sum,
 legend('topright', c('BIPOC students', 'White students'),
        fill=c(rgb(0,0,1,0.2), rgb(1,0,0,0.2)))
 
+#hist little
+ident_racegen %>%
+  mutate(racegen = fct_reorder(racegen, sum_ident)) %>%
+  ggplot(aes(x=sum_ident, color=racegen, fill=racegen)) +
+  geom_histogram(alpha=0.6, binwidth = 1) +
+  scale_fill_viridis_d() +
+  scale_color_viridis(discrete=TRUE) +
+  theme_ipsum() +
+  theme(
+    legend.position="none",
+    #panel.spacing = unit(0.1, "lines"),
+    strip.text.x = element_text(size = 16)
+    ) +
+  xlab("Geoscience Identity Score") +
+  ylab("Number of students") +
+  theme(axis.title.x = element_text(size = 12))+
+  theme(axis.title.y = element_text(size = 12))+
+  facet_wrap(~racegen)
+
+#hist with density curve overlaid
+ggplot(ident_racegen, aes(x=sum_ident)) + 
+  geom_histogram(aes(y=after_stat(density)),      # Histogram with density instead of count on y-axis
+                 binwidth=1,
+                 colour="black", fill="white") +
+  geom_density(alpha=.2, fill="#FF6666")
+
+racegen.labs<-c("BIPOC, Female and Non-Binary (n = 37)", 
+                         "BIPOC, Male (n = 27)", 
+                         "White, Female and Non-Binary (n = 51)",
+                         "White, Male (n = 24)")
+names(racegen.labs) <- c("BIPOC, Female and Non-Binary", 
+                         "BIPOC, Male", 
+                         "White, Female and Non-Binary",
+                         "White, Male")
+
+ggplot(ident_racegen, (aes(x=sum_ident, color=racegen, fill=racegen))) + 
+  geom_histogram(binwidth=1) + 
+  scale_fill_viridis_d()+
+  scale_color_viridis(discrete=TRUE) +
+  ggtitle("Geoscience Identity of Senior Geoscience Majors")+
+  theme(
+    legend.position='none',
+    plot.title = element_text(size = 18, face = 'bold', hjust = 0.5),
+    strip.text.x = element_text(size=16),
+    axis.title.x = element_text(size=16),
+    axis.title.y = element_text(size=16),
+    axis.text.y = element_text(size=12),
+    axis.text.x = element_text(size=12)
+    )+
+  xlab("Geoscience Identity Score") +
+  ylab("Number of students") +
+  facet_wrap(~racegen,
+             labeller = labeller(racegen=racegen.labs))

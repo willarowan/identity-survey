@@ -127,7 +127,7 @@ aov.boot_racegen$'p-values'
 
 #WRS2 package. percentile t method of bootstrapping for 1-way ANOVA
 #bootstrap with one-way anova, means-trimmed is tr=
-boot.racegen <- t1waybt(sum_ident~racegen,tr=.2,nboot=4999, data=ident_racegen)
+boot.racegen <- t1waybt(sum_ident~racegen,tr=.2,nboot=4999, data=ident_racegen.forboot)
 hist(boot.racegen$test)
 
 #pairwise post-hoc tests
