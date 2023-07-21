@@ -3,6 +3,7 @@ install.packages('ggridges')
 install.packages('gcookbook')
 install.packages('viridis')
 install.packages('hrbrthemes')
+install.packages('ggsignif')
 library("stringr")
 library("ggplot2")
 library('ggridges')
@@ -10,8 +11,11 @@ library('gcookbook')
 library('viridis')
 library('forcats')
 library('hrbrthemes')
+library('ggsignif')
 
 # **Reminder to run data_cleanup.R and identity_scoring.R before starting**
+
+#Start chunk to run
 
 #Add column wtih race & gender identifiers
 #dataframe with groups of BIPOC/White, WNB/Male
@@ -52,15 +56,17 @@ ident5$racegen <- c("All Responses")
 ident5 %>% count(racegen, sort = TRUE)
 ident_perfcomp_racegen_plusmean <- rbind(ident5, ident_perfcomp_racegen)
 
-#*** This one for GSA:
+#End chunk to run
+
+#*** This one for GSA and manuscript:
 
 #Box and whisker plots
 #Race and gender identity
 ggplot(ident_racegen_plusmean, aes(x=racegen, y=sum_ident, fill=racegen)) +
   geom_boxplot()+
-  ggtitle("Geoscience Identity of Senior Geoscience Majors")+
-  theme(plot.title = element_text(size = 16, face = 'bold', hjust = 0.5))+
-  theme(axis.text.x = element_text(size=14, vjust = 1))+
+  ggtitle("a)  Geoscience Identity of Senior Geoscience Majors")+
+  theme(plot.title = element_text(size=18, face = 'bold', hjust = -0.15))+
+  theme(axis.text.x = element_text(size=16, vjust = 1, color='black'))+
   scale_x_discrete(labels = c("All Responses\n(n = 139)",
                               "BIPOC, Female\nand Non-Binary\n(n = 37)", 
                               "BIPOC, Male\n(n = 27)", 
@@ -68,19 +74,26 @@ ggplot(ident_racegen_plusmean, aes(x=racegen, y=sum_ident, fill=racegen)) +
                               "White, Male\n(n = 24)"))+
   xlab("")+
   theme(axis.text.y = element_text(size=10))+
-  scale_y_continuous(limits=c(40,85))+
+  scale_y_continuous(limits=c(45,82))+
   ylab("Strength of Geoscience Identity")+ 
-  theme(axis.title.y = element_text(size=14))+
+  theme(axis.title.y = element_text(size=16))+
   scale_fill_manual(values=c("grey", "#fc766aff", "#fc766aff", "#fc766aff", 
                              "#fc766aff")) +
-  theme(legend.position="none")
+  theme(legend.position="none")+
+  geom_signif(
+    comparisons=list(c("BIPOC, Male","White, Female and Non-Binary"),
+                     c("BIPOC, Male","White, Male")),
+    annotations=c("**","***"),
+    map_signif_level=TRUE, textsize=6,vjust=.5,
+    y_position = c(75, 79)
+  )
 
 #recognition
 ggplot(ident_recog_racegen_plusmean, aes(x=racegen, y=sum_recog, fill=racegen)) +
   geom_boxplot()+
-  ggtitle("Geoscience Identity: Recognition")+
-  theme(plot.title = element_text(size = 16, face = 'bold', hjust = 0.5))+
-  theme(axis.text.x = element_text(size=14, vjust = 1))+
+  ggtitle("b)  Geoscience Identity: Recognition")+
+  theme(plot.title = element_text(size = 18, face = 'bold', hjust = -0.1))+
+  theme(axis.text.x = element_text(size=16, vjust = 1,color='black'))+
   scale_x_discrete(labels = c("All Responses\n(n = 139)",
                               "BIPOC, Female\nand Non-Binary\n(n = 37)", 
                               "BIPOC, Male\n(n = 27)", 
@@ -88,9 +101,9 @@ ggplot(ident_recog_racegen_plusmean, aes(x=racegen, y=sum_recog, fill=racegen)) 
                               "White, Male\n(n = 24)"))+
   xlab("")+
   theme(axis.text.y = element_text(size=10))+
-  scale_y_continuous(limits=c(20,50))+
-  ylab("Strength of Geoscience Identity: Recognition")+ 
-  theme(axis.title.y = element_text(size=14))+
+  scale_y_continuous(limits=c(20,48))+
+  ylab("Strength of Geoscience Identity:\nRecognition")+ 
+  theme(axis.title.y = element_text(size=16))+
   scale_fill_manual(values=c("grey", "#fc766aff", "#fc766aff", "#fc766aff", 
                              "#fc766aff")) +
   theme(legend.position="none")
@@ -98,9 +111,9 @@ ggplot(ident_recog_racegen_plusmean, aes(x=racegen, y=sum_recog, fill=racegen)) 
 #perfcomp
 ggplot(ident_perfcomp_racegen_plusmean, aes(x=racegen, y=sum_perfcomp, fill=racegen)) +
   geom_boxplot()+
-  ggtitle("Geoscience Identity: Performance/Competence")+
-  theme(plot.title = element_text(size = 16, face = 'bold', hjust = 0.5))+
-  theme(axis.text.x = element_text(size=14, vjust = 1))+
+  ggtitle("c)  Geoscience Identity: Performance/Competence")+
+  theme(plot.title = element_text(size = 18, face = 'bold', hjust = -0.16))+
+  theme(axis.text.x = element_text(size=16, vjust = 1,color='black'))+
   scale_x_discrete(labels = c("All Responses\n(n = 139)",
                               "BIPOC, Female\nand Non-Binary\n(n = 37)", 
                               "BIPOC, Male\n(n = 27)", 
@@ -110,10 +123,20 @@ ggplot(ident_perfcomp_racegen_plusmean, aes(x=racegen, y=sum_perfcomp, fill=race
   theme(axis.text.y = element_text(size=10))+
   scale_y_continuous(limits=c(12.5,37.5))+
   ylab("Strength of Geoscience Identity:\nPerformance/Competence")+ 
-  theme(axis.title.y = element_text(size=14))+
+  theme(axis.title.y = element_text(size=16))+
   scale_fill_manual(values=c("grey", "#fc766aff", "#fc766aff", "#fc766aff", 
                              "#fc766aff")) +
-  theme(legend.position="none")
+  theme(legend.position="none")+
+  geom_signif(
+    comparisons=list(c("BIPOC, Female and Non-Binary","BIPOC, Male"),
+                    c("BIPOC, Male","White, Female and Non-Binary"),
+                    c("BIPOC, Female and Non-Binary","White, Male"),
+                    c("BIPOC, Male","White, Male"),
+                    c("White, Female and Non-Binary","White, Male")),
+    annotations=c("*","*","*","*","*"),
+    map_signif_level=TRUE, textsize=6,vjust=.5,
+    y_position = c(29.5,30.5,33,34.5,36.5)
+  )
 
 #Just race
 ggplot(ident_race, aes(x=race, y=sum_ident)) +
@@ -214,7 +237,7 @@ ggplot(ident_race, aes(x = sum_ident, fill = race)) +
   labs(colour = "Race/Ethnicity")
   
 
-#Stacked density curves
+#Stacked density curves - shows distributions, but no y-axis for # of students
 ggplot(ident_racegen, aes(x = sum_ident, y = racegen, fill = racegen)) + 
   geom_density_ridges(size = .5)+
   scale_fill_viridis_d()+
@@ -266,7 +289,7 @@ ggplot(ident_recog_racegen, aes(x = sum_recog, y = racegen, fill = racegen)) +
   theme(legend.position = "none")
 
 
-#Misc and old
+
 #histogram with stacked datasets (not ideal)
 hist(x = ident_BIPOC$sum,
      col=rgb(0,0,1,0.2),
@@ -313,6 +336,7 @@ names(racegen.labs) <- c("BIPOC, Female and Non-Binary",
                          "White, Female and Non-Binary",
                          "White, Male")
 
+#for manuscript - wrapped histograms to show distributions
 ggplot(ident_racegen, (aes(x=sum_ident, color=racegen, fill=racegen))) + 
   geom_histogram(binwidth=1) + 
   scale_fill_viridis_d()+
