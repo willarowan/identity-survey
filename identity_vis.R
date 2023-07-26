@@ -74,19 +74,19 @@ ggplot(ident_racegen_plusmean, aes(x=racegen, y=sum_ident, fill=racegen)) +
                               "White, Male\n(n = 24)"))+
   xlab("")+
   theme(axis.text.y = element_text(size=10))+
-  scale_y_continuous(limits=c(45,82))+
+  #scale_y_continuous(limits=c(45,82))+
   ylab("Strength of Geoscience Identity")+ 
   theme(axis.title.y = element_text(size=16))+
   scale_fill_manual(values=c("grey", "#fc766aff", "#fc766aff", "#fc766aff", 
                              "#fc766aff")) +
-  theme(legend.position="none")+
-  geom_signif(
-    comparisons=list(c("BIPOC, Male","White, Female and Non-Binary"),
-                     c("BIPOC, Male","White, Male")),
-    annotations=c("**","***"),
-    map_signif_level=TRUE, textsize=6,vjust=.5,
-    y_position = c(75, 79)
-  )
+  theme(legend.position="none")
+  #geom_signif(
+    #comparisons=list(c("BIPOC, Male","White, Female and Non-Binary"),
+                     #c("BIPOC, Male","White, Male")),
+    #annotations=c("**","***"),
+    #map_signif_level=TRUE, textsize=6,vjust=.5,
+    #y_position = c(75, 79)
+  #)
 
 #recognition
 ggplot(ident_recog_racegen_plusmean, aes(x=racegen, y=sum_recog, fill=racegen)) +
@@ -121,13 +121,13 @@ ggplot(ident_perfcomp_racegen_plusmean, aes(x=racegen, y=sum_perfcomp, fill=race
                               "White, Male\n(n = 24)"))+
   xlab("")+
   theme(axis.text.y = element_text(size=10))+
-  scale_y_continuous(limits=c(12.5,37.5))+
+  #scale_y_continuous(limits=c(12.5,37.5))+
   ylab("Strength of Geoscience Identity:\nPerformance/Competence")+ 
   theme(axis.title.y = element_text(size=16))+
   scale_fill_manual(values=c("grey", "#fc766aff", "#fc766aff", "#fc766aff", 
                              "#fc766aff")) +
-  theme(legend.position="none")+
-  geom_signif(
+  theme(legend.position="none")
+  #geom_signif(
     comparisons=list(c("BIPOC, Female and Non-Binary","BIPOC, Male"),
                     c("BIPOC, Male","White, Female and Non-Binary"),
                     c("BIPOC, Female and Non-Binary","White, Male"),

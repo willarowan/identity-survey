@@ -225,12 +225,28 @@ ks.test(ident_WNB_White$sum_ident, 'pnorm')
 #warning msg 'ties should not be present'
 #p=2.2e-16 in multiple cases because that is R's smallest positive floating-point number
 
+
 #can also test with a QQ plot
+racegen.labs<-c("BIPOC, Female and Non-Binary (n = 37)", 
+                "BIPOC, Male (n = 27)", 
+                "White, Female and Non-Binary (n = 51)",
+                "White, Male (n = 24)")
+names(racegen.labs) <- c("BIPOC, Female and Non-Binary", 
+                         "BIPOC, Male", 
+                         "White, Female and Non-Binary",
+                         "White, Male")
+
 ident_racegen %>% 
   ggplot(aes(sample = sum_ident)) +
   stat_qq() +
   stat_qq_line(col = "goldenrod") +
-  facet_wrap(~racegen) +
+  theme(
+    strip.text.x = element_text(size=16),
+  )+
+  xlab("Theoretical Quantiles")+
+  ylab("Sample Quantiles")+
+  facet_wrap(~racegen,
+             labeller = labeller(racegen=racegen.labs)) +
   theme_minimal() +
   labs(title = "Normal Q-Q Plot")
 
